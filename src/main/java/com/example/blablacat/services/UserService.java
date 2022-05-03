@@ -21,6 +21,7 @@ public class UserService implements IUserService {
         UserDto udto = new UserDto();
         udto.setLastName(entity.getLastName());
         udto.setFirstName(entity.getFirstName());
+        udto.setIdCompany(entity.getIdCompany());
         udto.setUsername(entity.getUsername());
         udto.setEmail(entity.getEmail());
         udto.setPassword(entity.getPassword());
@@ -44,19 +45,21 @@ public class UserService implements IUserService {
     }
 
     @Override
-    public Integer addUsers(String lastName, String firstName, String username, String idCompany, String email, String password) {
+    public Integer addUsers(String username, String idCompany, String lastName, String firstName, String password, String email) {
         UserEntity ue = new UserEntity();
-        ue.setLastName(lastName);
-        ue.setFirstName(firstName);
         ue.setUsername(username);
         ue.setIdCompany(idCompany);
-        ue.setEmail(email);
+        ue.setLastName(lastName);
+        ue.setFirstName(firstName);
         ue.setPassword(password);
+        ue.setEmail(email);
+
 
         ue.setCreatedAt(LocalDateTime.now());
         ue.setUpdateAt(LocalDateTime.now());
 
         repository.saveAndFlush(ue);
+        System.out.println(ue.getIdCompany());
         return ue.getId();
     }
 

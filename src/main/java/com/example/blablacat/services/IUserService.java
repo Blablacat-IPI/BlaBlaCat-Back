@@ -11,7 +11,7 @@ public interface IUserService {
 
     List<UserDto> getAllUsers();
 
-    Integer addUsers(String lastName, String firstName, String username, String idCompany, String email, String password );
+    Integer addUsers(String username, String idCompany, String lastName, String firstName, String password, String email);
 
 
 }
