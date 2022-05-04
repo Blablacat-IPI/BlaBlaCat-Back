@@ -3,12 +3,13 @@ package com.example.blablacat.controller;
 import com.example.blablacat.dto.CourseDto;
 import com.example.blablacat.services.ICourseService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@CrossOrigin(origins = "http://localhost:4200")
 @RestController
 @RequestMapping("Course")
 public class CourseController {
@@ -19,7 +20,15 @@ public class CourseController {
     @GetMapping("all")
     public List<CourseDto> getAllCourse() { return service.getAllCourse();}
 
-
+    @PostMapping("add")
+    public ResponseEntity<Integer> addCourses(@RequestBody CourseDto course_dto) {
+        Integer course_id = service.addCourse(course_dto.getDate(), course_dto.getCityDeparture(), course_dto.getDepartureZipCode(), course_dto.getStreetDeparture(), course_dto.getCityArrival(), course_dto.getArrivalZipCode(),course_dto.getStreetArrival(), course_dto.getNumberPlace());
+        try {
+            return new ResponseEntity<>(course_id, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity(e.getMessage(), HttpStatus.BAD_REQUEST);
+        }
+    }
 
 
 }

@@ -23,11 +23,17 @@ public class CourseEntity {
     @Column(name = "city_departure")
     private String cityDeparture;
 
+    @Column(name= "departure_zip_code")
+    private Integer departureZipCode;
+
     @Column(name = "street_departure")
     private String streetDeparture;
 
     @Column(name = "city_arrival")
     private String cityArrival;
+
+    @Column(name= "arrival_zip_code")
+    private Integer arrivalZipCode;
 
     @Column(name = "street_arrival")
     private String streetArrival;
@@ -45,6 +51,22 @@ public class CourseEntity {
 
     @Column(name = "deleted_at")
     private LocalDateTime deletedAt;
+
+    public Integer getDepartureZipCode() {
+        return departureZipCode;
+    }
+
+    public void setDepartureZipCode(Integer departureZipCode) {
+        this.departureZipCode = departureZipCode;
+    }
+
+    public Integer getArrivalZipCode() {
+        return arrivalZipCode;
+    }
+
+    public void setArrivalZipCode(Integer arrivalZipCode) {
+        this.arrivalZipCode = arrivalZipCode;
+    }
 
     public Integer getId() {
         return id;

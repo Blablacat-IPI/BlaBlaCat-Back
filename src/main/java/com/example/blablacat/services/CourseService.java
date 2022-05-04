@@ -6,6 +6,7 @@ import com.example.blablacat.repository.CourseRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,8 +22,10 @@ public class CourseService implements ICourseService {
         cdto.setIdDriver(entity.getIdDriver());
         cdto.setDate(entity.getDate());
         cdto.setCityDeparture(entity.getCityDeparture());
+        cdto.setDepartureZipCode(entity.getDepartureZipCode());
         cdto.setStreetDeparture(entity.getStreetDeparture());
         cdto.setCityArrival(entity.getCityArrival());
+        cdto.setArrivalZipCode(entity.getArrivalZipCode());
         cdto.setStreetArrival(entity.getStreetArrival());
         cdto.setNumberPlace(entity.getNumberPlace());
 
@@ -41,5 +44,23 @@ public class CourseService implements ICourseService {
         return listDto;
     }
 
+    @Override
+    public Integer addCourse(LocalDateTime date, String cityDeparture, Integer departureZipCode, String streetDeparture, String cityArrival, Integer arrivalZipCode, String streetArrival, Integer numberPlace) {
+        CourseEntity courseEntity = new CourseEntity();
+        courseEntity.setDate(date);
+        courseEntity.setIdDriver(10);
+        courseEntity.setCityDeparture(cityDeparture);
+        courseEntity.setDepartureZipCode(departureZipCode);
+        courseEntity.setStreetDeparture(streetDeparture);
+        courseEntity.setCityArrival(cityArrival);
+        courseEntity.setArrivalZipCode(arrivalZipCode);
+        courseEntity.setStreetArrival(streetArrival);
+        courseEntity.setNumberPlace(numberPlace);
+        courseEntity.setCreatedAt(LocalDateTime.now());
+        courseEntity.setUpdateAt(LocalDateTime.now());
+
+        repository.saveAndFlush(courseEntity);
+        return courseEntity.getId();
+    }
 
 }

@@ -7,10 +7,30 @@ public class CourseDto {
     private Integer idDriver;
     private LocalDateTime date;
     private String cityDeparture;
+
+    private Integer departureZipCode;
     private String streetDeparture;
     private String cityArrival;
+
+    private Integer arrivalZipCode;
     private String streetArrival;
     private Integer numberPlace;
+
+    public Integer getDepartureZipCode() {
+        return departureZipCode;
+    }
+
+    public void setDepartureZipCode(Integer departureZipCode) {
+        this.departureZipCode = departureZipCode;
+    }
+
+    public Integer getArrivalZipCode() {
+        return arrivalZipCode;
+    }
+
+    public void setArrivalZipCode(Integer arrivalZipCode) {
+        this.arrivalZipCode = arrivalZipCode;
+    }
 
     public Integer getIdDriver() {
         return idDriver;
