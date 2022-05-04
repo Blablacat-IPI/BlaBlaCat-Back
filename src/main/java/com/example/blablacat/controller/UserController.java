@@ -27,7 +27,7 @@ public class UserController {
     @PostMapping("addUser")
     public ResponseEntity<Integer> addUsers(@RequestBody UserDto udto) {
 
-        Integer id = service.addUsers(udto.getLastName(), udto.getFirstName(), udto.getIdCompany(), udto.getUsername(), udto.getEmail(), udto.getPassword());
+        Integer id = service.addUsers( udto.getUsername(), udto.getIdCompany(), udto.getLastName(), udto.getFirstName(), udto.getPassword(), udto.getEmail());
 
         try {
             return new ResponseEntity<>(id, HttpStatus.OK);
