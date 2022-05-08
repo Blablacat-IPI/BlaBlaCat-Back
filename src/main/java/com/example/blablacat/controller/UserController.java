@@ -35,4 +35,9 @@ public class UserController {
             return new ResponseEntity(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
     }
+
+    @DeleteMapping("deleteUser")
+    public void deleteUsers(@PathVariable("id") Integer id) {
+        service.deleteUser(id);
+    }
 }

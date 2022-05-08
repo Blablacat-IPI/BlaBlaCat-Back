@@ -63,5 +63,11 @@ public class UserService implements IUserService {
         return ue.getId();
     }
 
+    @Override
+    public void deleteUser(Integer id) {
+        repository.deleteById(id);
+    }
+
+
 
 }

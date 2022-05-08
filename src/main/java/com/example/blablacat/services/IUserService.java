@@ -13,5 +13,6 @@ public interface IUserService {
 
     Integer addUsers(String username, String idCompany, String lastName, String firstName, String password, String email);
 
+    void deleteUser(Integer id);
 
 }
