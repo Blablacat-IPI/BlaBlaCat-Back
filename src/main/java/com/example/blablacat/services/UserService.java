@@ -24,6 +24,7 @@ public class UserService implements IUserService {
         udto.setUsername(entity.getUsername());
         udto.setEmail(entity.getEmail());
         udto.setPassword(entity.getPassword());
+        udto.setIdCompany(entity.getIdCompany());
 
         return udto;
 
@@ -34,6 +35,18 @@ public class UserService implements IUserService {
     public List<UserDto> getAllUsers() {
 
         List<UserEntity> list = repository.findAll();
+        List<UserDto> listDto = new ArrayList<>();
+
+        for(UserEntity ue : list){
+            listDto.add(this.toDto(ue));
+        }
+
+        return listDto;
+    }
+
+    public List<UserDto> getAllUnvalidUsers(){
+
+        List<UserEntity> list = repository.findAllByValidateAdminNull();
         List<UserDto> listDto = new ArrayList<>();
 
         for(UserEntity ue : list){
@@ -60,5 +73,18 @@ public class UserService implements IUserService {
         return ue.getId();
     }
 
+    @Override
+    public Boolean validateUserByAdmin(UserDto dto){
+
+        //Si courage et chance, beaucoup de chance
+        //repository.userValidateByAdmin(false, dto.getUsername());
+
+        UserEntity entity = repository.findByUsername(dto.getUsername());
+        entity.setValidateAdmin(true);
+        System.out.println("avant la requête");
+        repository.save(entity);
+        System.out.println("après la requête");
+        return true;
+    }
 
 }

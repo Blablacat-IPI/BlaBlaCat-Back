@@ -11,7 +11,10 @@ public interface IUserService {
 
     List<UserDto> getAllUsers();
 
+    List<UserDto> getAllUnvalidUsers();
+
     Integer addUsers(String lastName, String firstName, String username, String idCompany, String email, String password );
 
+    Boolean validateUserByAdmin(UserDto dto);
 
 }
