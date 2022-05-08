@@ -24,6 +24,12 @@ public class UserController {
         return service.getAllUsers();
     }
 
+    //getAllUnvalidUsers
+    @GetMapping("allUnvalid")
+    public List<UserDto> getAllUnvalid() {
+        return service.getAllUnvalidUsers();
+    }
+
     @PostMapping("addUser")
     public ResponseEntity<Integer> addUsers(@RequestBody UserDto udto) {
 
@@ -35,6 +41,19 @@ public class UserController {
             return new ResponseEntity(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
     }
+
+    @PostMapping("validateByAdmin")
+    public ResponseEntity<Boolean> validateByAdmin(@RequestBody UserDto uDto) {
+
+        try {
+            Boolean reponse = service.validateUserByAdmin(uDto);
+            System.out.println("jusqu'ici ça va");
+            return new ResponseEntity(reponse, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity(e.getMessage(), HttpStatus.BAD_REQUEST);
+        }
+    }
+
 
     @DeleteMapping("deleteUser")
     public void deleteUsers(@PathVariable("id") Integer id) {
