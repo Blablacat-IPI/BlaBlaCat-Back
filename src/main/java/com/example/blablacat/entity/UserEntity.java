@@ -1,11 +1,14 @@
 package com.example.blablacat.entity;
 
 import javax.persistence.*;
+
+import org.apache.catalina.User;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
 @Table(name = "Users")
@@ -49,6 +52,9 @@ public class UserEntity {
     @Column(name = "deleted_at")
     private LocalDateTime deletedAt;
 
+    @OneToMany
+    @JoinColumn(name="user_id", referencedColumnName = "id")
+    private List<UserHasCourseEntity> userHasCourseEntityList;
     public Integer getId() {
         return id;
     }

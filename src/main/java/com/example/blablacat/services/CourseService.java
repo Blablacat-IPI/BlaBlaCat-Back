@@ -48,7 +48,7 @@ public class CourseService implements ICourseService {
     public Integer addCourse(LocalDateTime date, String cityDeparture, Integer departureZipCode, String streetDeparture, String cityArrival, Integer arrivalZipCode, String streetArrival, Integer numberPlace) {
         CourseEntity courseEntity = new CourseEntity();
         courseEntity.setDate(date);
-        courseEntity.setIdDriver(10);
+        courseEntity.setIdDriver(courseEntity.getIdDriver());
         courseEntity.setCityDeparture(cityDeparture);
         courseEntity.setDepartureZipCode(departureZipCode);
         courseEntity.setStreetDeparture(streetDeparture);

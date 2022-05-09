@@ -26,7 +26,7 @@ public class CourseController {
         try {
             return new ResponseEntity<>(course_id, HttpStatus.OK);
         } catch (Exception e) {
-            return new ResponseEntity(e.getMessage(), HttpStatus.BAD_REQUEST);
+            return new ResponseEntity("Impossible d'ajouter un utilisateur à la course", HttpStatus.BAD_REQUEST);
         }
     }
 
