@@ -57,7 +57,6 @@ public class CourseService implements ICourseService {
         courseEntity.setStreetArrival(streetArrival);
         courseEntity.setNumberPlace(numberPlace);
         courseEntity.setCreatedAt(LocalDateTime.now());
-        courseEntity.setUpdateAt(LocalDateTime.now());
 
         repository.saveAndFlush(courseEntity);
         return courseEntity.getId();

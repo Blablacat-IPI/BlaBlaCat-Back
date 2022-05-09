@@ -6,14 +6,15 @@ public class CourseDto {
 
     private Integer idDriver;
     private LocalDateTime date;
-    private String cityDeparture;
 
+    private String cityDeparture;
     private Integer departureZipCode;
     private String streetDeparture;
-    private String cityArrival;
 
+    private String cityArrival;
     private Integer arrivalZipCode;
     private String streetArrival;
+
     private Integer numberPlace;
 
     public Integer getDepartureZipCode() {
