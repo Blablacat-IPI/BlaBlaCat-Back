@@ -19,6 +19,7 @@ public class UserService implements IUserService {
     @Override
     public UserDto toDto(UserEntity entity) {
         UserDto udto = new UserDto();
+        udto.setId(entity.getId());
         udto.setLastName(entity.getLastName());
         udto.setFirstName(entity.getFirstName());
         udto.setIdCompany(entity.getIdCompany());

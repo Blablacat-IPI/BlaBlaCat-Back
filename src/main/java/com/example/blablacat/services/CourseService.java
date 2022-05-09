@@ -45,6 +45,19 @@ public class CourseService implements ICourseService {
     }
 
     @Override
+    public List<CourseDto> getAllCity(String city) {
+        List<CourseEntity> list = repository.findByCityDepartureOrCityArrival(city, city);
+        List<CourseDto> listDto = new ArrayList<>();
+
+        for(CourseEntity ce : list) {
+            listDto.add(this.toDto(ce));
+        }
+        return listDto;
+    }
+
+
+
+    @Override
     public Integer addCourse(LocalDateTime date, String cityDeparture, Integer departureZipCode, String streetDeparture, String cityArrival, Integer arrivalZipCode, String streetArrival, Integer numberPlace) {
         CourseEntity courseEntity = new CourseEntity();
         courseEntity.setDate(date);
@@ -61,5 +74,6 @@ public class CourseService implements ICourseService {
         repository.saveAndFlush(courseEntity);
         return courseEntity.getId();
     }
+
 
 }
