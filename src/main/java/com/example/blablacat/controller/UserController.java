@@ -30,12 +30,12 @@ public class UserController {
         return service.getAllUnvalidUsers();
     }
 
-
     @PostMapping("addUser")
-    public ResponseEntity<Integer> addUsers(@RequestBody UserDto uDto) {
+    public ResponseEntity<Integer> addUsers(@RequestBody UserDto udto) {
+
+        Integer id = service.addUsers( udto.getUsername(), udto.getIdCompany(), udto.getLastName(), udto.getFirstName(), udto.getPassword(), udto.getEmail());
 
         try {
-            Integer id = service.addUsers(uDto.getLastName(), uDto.getFirstName(), uDto.getIdCompany(), uDto.getUsername(), uDto.getEmail(), uDto.getPassword());
             return new ResponseEntity<>(id, HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity(e.getMessage(), HttpStatus.BAD_REQUEST);
@@ -52,5 +52,11 @@ public class UserController {
         } catch (Exception e) {
             return new ResponseEntity(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
+    }
+
+
+    @DeleteMapping("deleteUser")
+    public void deleteUsers(@PathVariable("id") Integer id) {
+        service.deleteUser(id);
     }
 }

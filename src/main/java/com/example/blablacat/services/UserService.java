@@ -77,6 +77,12 @@ public class UserService implements IUserService {
     }
 
     @Override
+    public void deleteUser(Integer id) {
+        repository.deleteById(id);
+    }
+
+
+    @Override
     public Boolean validateUserByAdmin(UserDto dto){
 
         //Si courage et chance, beaucoup de chance
@@ -89,5 +95,6 @@ public class UserService implements IUserService {
         System.out.println("après la requête");
         return true;
     }
+
 
 }

@@ -11,10 +11,13 @@ public interface IUserService {
 
     List<UserDto> getAllUsers();
 
+    void deleteUser(Integer id);
+
     List<UserDto> getAllUnvalidUsers();
 
     Integer addUsers(String lastName, String firstName, String username, String idCompany, String email, String password );
 
     Boolean validateUserByAdmin(UserDto dto);
+
 
 }
