@@ -55,6 +55,27 @@ public class UserEntity {
     @OneToMany
     @JoinColumn(name="user_id", referencedColumnName = "id")
     private List<UserHasCourseEntity> userHasCourseEntityList;
+
+    @OneToMany
+    @JoinColumn(name="id_driver", referencedColumnName = "id")
+    private List<CourseEntity> courseEntityList;
+
+    public List<UserHasCourseEntity> getUserHasCourseEntityList() {
+        return userHasCourseEntityList;
+    }
+
+    public void setUserHasCourseEntityList(List<UserHasCourseEntity> userHasCourseEntityList) {
+        this.userHasCourseEntityList = userHasCourseEntityList;
+    }
+
+    public List<CourseEntity> getCourseEntityList() {
+        return courseEntityList;
+    }
+
+    public void setCourseEntityList(List<CourseEntity> courseEntityList) {
+        this.courseEntityList = courseEntityList;
+    }
+
     public Integer getId() {
         return id;
     }

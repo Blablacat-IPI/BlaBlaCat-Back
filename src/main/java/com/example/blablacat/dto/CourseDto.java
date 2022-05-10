@@ -1,10 +1,12 @@
 package com.example.blablacat.dto;
 
+import com.example.blablacat.entity.UserEntity;
+
 import java.time.LocalDateTime;
 
 public class CourseDto {
 
-    private Integer idDriver;
+    private String driverUsername;
     private LocalDateTime date;
 
     private String cityDeparture;
@@ -16,6 +18,16 @@ public class CourseDto {
     private String streetArrival;
 
     private Integer numberPlace;
+
+
+
+    public String getDriverUsername() {
+        return driverUsername;
+    }
+
+    public void setDriverUsername(String driverUsername) {
+        this.driverUsername = driverUsername;
+    }
 
     public Integer getDepartureZipCode() {
         return departureZipCode;
@@ -31,14 +43,6 @@ public class CourseDto {
 
     public void setArrivalZipCode(Integer arrivalZipCode) {
         this.arrivalZipCode = arrivalZipCode;
-    }
-
-    public Integer getIdDriver() {
-        return idDriver;
-    }
-
-    public void setIdDriver(Integer idDriver) {
-        this.idDriver = idDriver;
     }
 
     public LocalDateTime getDate() {
