@@ -16,5 +16,7 @@ public interface ICourseService {
 
     Integer addCourse(LocalDateTime date, String cityDeparture, Integer departureZipCode, String streetDeparture, String cityArrival, Integer arrivalZipCode, String streetArrival, Integer numberPlace);
 
+    List<CourseDto> getAllCity(String city);
+
 }
 

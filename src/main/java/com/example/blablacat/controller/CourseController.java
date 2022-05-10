@@ -20,6 +20,11 @@ public class CourseController {
     @GetMapping("all")
     public List<CourseDto> getAllCourse() { return service.getAllCourse();}
 
+    @GetMapping("searchcity/{city}")
+    public List<CourseDto> getSearchCity(@PathVariable String city ) {
+        return service.getAllCity(city);
+    }
+
     @PostMapping("add")
     public ResponseEntity<Integer> addCourses(@RequestBody CourseDto course_dto) {
         Integer course_id = service.addCourse(course_dto.getDate(), course_dto.getCityDeparture(), course_dto.getDepartureZipCode(), course_dto.getStreetDeparture(), course_dto.getCityArrival(), course_dto.getArrivalZipCode(),course_dto.getStreetArrival(), course_dto.getNumberPlace());
