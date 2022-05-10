@@ -11,6 +11,7 @@ import org.apache.catalina.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,15 +25,16 @@ public class UserHasCourseService implements IUserHasCourseService{
     @Autowired
     CourseRepository courseRepository;
 
-        @Override
-        public AddUserToCourseDto toDto(UserHasCourseEntity userHasCourseEntity ) {
-            AddUserToCourseDto userHasCourseDto = new AddUserToCourseDto();
-            userHasCourseDto.setDisplayName(userHasCourseEntity.getUserEntity().getFirstName() + " " + userHasCourseEntity.getUserEntity().getLastName() );
-            userHasCourseDto.setDisplayArrivalAddress("Arrivée : " + userHasCourseEntity.getCourseEntity().getStreetArrival() + " " + userHasCourseEntity.getCourseEntity().getArrivalZipCode() + " " + userHasCourseEntity.getCourseEntity().getCityArrival());
-            userHasCourseDto.setDisplayDepartureAddress("Départ : " + userHasCourseEntity.getCourseEntity().getDepartureZipCode() + " " + userHasCourseEntity.getCourseEntity().getStreetDeparture() + " " + userHasCourseEntity.getCourseEntity().getCityDeparture());
-            userHasCourseDto.setUser_id(userHasCourseEntity.getUserEntity().getId());
-            userHasCourseDto.setCourse_id(userHasCourseEntity.getCourseEntity().getId());
-            return userHasCourseDto;
+    @Override
+    public AddUserToCourseDto toDto(UserHasCourseEntity userHasCourseEntity ) {
+        AddUserToCourseDto userHasCourseDto = new AddUserToCourseDto();
+        userHasCourseDto.setDisplayName(userHasCourseEntity.getUserEntity().getFirstName() + " " + userHasCourseEntity.getUserEntity().getLastName() );
+        userHasCourseDto.setDisplayArrivalAddress("Arrivée : " + userHasCourseEntity.getCourseEntity().getStreetArrival() + " " + userHasCourseEntity.getCourseEntity().getArrivalZipCode() + " " + userHasCourseEntity.getCourseEntity().getCityArrival());
+        userHasCourseDto.setDisplayDepartureAddress("Départ : " + userHasCourseEntity.getCourseEntity().getDepartureZipCode() + " " + userHasCourseEntity.getCourseEntity().getStreetDeparture() + " " + userHasCourseEntity.getCourseEntity().getCityDeparture());
+        userHasCourseDto.setUser_id(userHasCourseEntity.getUserEntity().getId());
+        userHasCourseDto.setCourse_id(userHasCourseEntity.getCourseEntity().getId());
+        userHasCourseDto.setDisplayDate(userHasCourseEntity.getCourseEntity().getDate());
+        return userHasCourseDto;
     }
 
     @Override
@@ -47,6 +49,7 @@ public class UserHasCourseService implements IUserHasCourseService{
             entity.setUserEntity(userEntity);
             CourseEntity courseEntity = courseRepository.findById(dto.getCourse_id()).get();
             entity.setCourseEntity(courseEntity);
+            entity.setCreatedAt(LocalDateTime.now());
 
             entity = userHasCourseRepository.saveAndFlush(entity);
             return entity.getUser_has_course_id();
