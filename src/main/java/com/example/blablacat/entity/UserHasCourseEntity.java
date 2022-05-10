@@ -7,7 +7,7 @@ import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name ="user_has_course")
+@Table(name ="Reservations")
 public class UserHasCourseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
