@@ -46,9 +46,13 @@ public class UserController {
     public ResponseEntity<Boolean> validateByAdmin(@RequestBody UserDto uDto) {
 
         try {
-            Boolean reponse = service.validateUserByAdmin(uDto);
-            System.out.println("jusqu'ici ça va");
-            return new ResponseEntity(reponse, HttpStatus.OK);
+            if(service.checkExistById(uDto.getId())){
+                Boolean reponse = service.validateUserByAdmin(uDto);
+                return new ResponseEntity(reponse, HttpStatus.OK);
+            }else{
+                return new ResponseEntity("Cet User n'existe pas", HttpStatus.NOT_FOUND);
+            }
+
         } catch (Exception e) {
             return new ResponseEntity(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
@@ -59,4 +63,14 @@ public class UserController {
     public void deleteUsers(@PathVariable("id") Integer id) {
         service.deleteUser(id);
     }
+
+    @DeleteMapping("softDeleteUser/{id}")
+    public void softDeleteUsers(@PathVariable("id") Integer id) {
+
+        if (service.checkExistById(id)){
+            service.softDeleteUser(id);
+        }
+
+    }
+
 }
