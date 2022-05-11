@@ -42,11 +42,17 @@ public class ReservationController {
       return reservationService.getAllCourses();
     }
 
+    @GetMapping("pagemax")
+    public Integer pageMax() {
+        return reservationService.numberPageMax();
+    }
+
     @GetMapping("Page")
     public List<ReservationDto> Page(@RequestParam Integer page){
-        Integer size = 3;
+        Integer size = 10;
         return reservationService.getAllCoursesPage(page, size);
     }
+
 
 
 }
