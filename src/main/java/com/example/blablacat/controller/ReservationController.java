@@ -1,12 +1,17 @@
 package com.example.blablacat.controller;
 
 import com.example.blablacat.dto.ReservationDto;
+import com.example.blablacat.entity.ReservationEntity;
+import com.example.blablacat.repository.ReservationRepository;
 import com.example.blablacat.services.IReservationService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @CrossOrigin(origins="http://localhost:4200")
