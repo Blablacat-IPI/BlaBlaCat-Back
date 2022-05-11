@@ -48,7 +48,22 @@ public class CourseService implements ICourseService {
     }
 
     @Override
-    public List<CourseDto> getAllCity(String city) {
+    public List<CourseDto> getAllCoursesValid() {
+        List<CourseEntity> list = repository.findAllByDeletedAtNullAndDateAfter(LocalDateTime.now());
+        List<CourseDto> listDto = new ArrayList<>();
+
+        for(CourseEntity entity : list){
+            listDto.add(this.toDto(entity));
+        }
+
+        System.out.println(listDto);
+
+        return listDto;
+    }
+
+
+    @Override
+    public List<CourseDto> getAllCoursesByCity(String city) {
         List<CourseEntity> list = repository.findByCityDepartureOrCityArrival(city, city);
         List<CourseDto> listDto = new ArrayList<>();
 

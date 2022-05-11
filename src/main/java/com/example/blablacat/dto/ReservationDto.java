@@ -5,13 +5,9 @@ import java.time.LocalDateTime;
 public class ReservationDto {
     private Integer user_id;
     private Integer course_id;
-
     private String displayName;
-
     private String displayDepartureAddress;
-
     private String displayArrivalAddress;
-
     private LocalDateTime displayDate;
 
     private String userName;
