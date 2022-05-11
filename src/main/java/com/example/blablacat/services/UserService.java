@@ -86,19 +86,20 @@ public class UserService implements IUserService {
     public void softDeleteUser(Integer id) {
         //rajouter le control exist() dans le controller
         UserEntity entity = repository.findById(id).get();
-
-
+        entity.setDeletedAt(LocalDateTime.now());
+        repository.save(entity);
     }
-
 
     @Override
     public Boolean validateUserByAdmin(UserDto dto){
-        //rajouter control exist() dans le controller
         UserEntity entity = repository.findByUsername(dto.getUsername()).get();
         entity.setValidateAdmin(true);
         repository.save(entity);
         return true;
     }
 
+    public Boolean checkExistById(Integer id){
+        return repository.existsById(id);
+    }
 
 }
