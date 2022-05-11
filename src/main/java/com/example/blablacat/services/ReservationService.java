@@ -32,8 +32,8 @@ public class ReservationService implements IReservationService {
         ReservationDto userHasCourseDto = new ReservationDto();
         userHasCourseDto.setDisplayName(reservationEntity.getUserEntity().getFirstName() + " " + reservationEntity.getUserEntity().getLastName() );
         userHasCourseDto.setUserName(reservationEntity.getUserEntity().getUsername());
-        userHasCourseDto.setDisplayArrivalAddress("Arrivée : " + reservationEntity.getCourseEntity().getStreetArrival() + " " + reservationEntity.getCourseEntity().getArrivalZipCode() + " " + reservationEntity.getCourseEntity().getCityArrival());
-        userHasCourseDto.setDisplayDepartureAddress("Départ : " + reservationEntity.getCourseEntity().getDepartureZipCode() + " " + reservationEntity.getCourseEntity().getStreetDeparture() + " " + reservationEntity.getCourseEntity().getCityDeparture());
+        userHasCourseDto.setDisplayArrivalAddress(reservationEntity.getCourseEntity().getStreetArrival() + ", " + reservationEntity.getCourseEntity().getArrivalZipCode() + " " + reservationEntity.getCourseEntity().getCityArrival());
+        userHasCourseDto.setDisplayDepartureAddress(reservationEntity.getCourseEntity().getStreetDeparture() + ", " + reservationEntity.getCourseEntity().getDepartureZipCode() + " " + reservationEntity.getCourseEntity().getCityDeparture());
         userHasCourseDto.setUser_id(reservationEntity.getUserEntity().getId());
         userHasCourseDto.setCourse_id(reservationEntity.getCourseEntity().getId());
         userHasCourseDto.setDisplayDate(reservationEntity.getCourseEntity().getDate());
@@ -64,10 +64,8 @@ public class ReservationService implements IReservationService {
             List<ReservationEntity> list = reservationRepository.findAll();
             List<ReservationDto> listFinal = new ArrayList<>();
 
-            for(int i = 0;i<list.size();i++){
-                ReservationEntity entity = list.get(i);
-                ReservationDto dto = this.toDto(entity);
-                listFinal.add(dto);
+            for(ReservationEntity entity: list){
+                listFinal.add(this.toDto(entity));
             }
             return listFinal;
         }
@@ -78,10 +76,8 @@ public class ReservationService implements IReservationService {
         List<ReservationEntity> list = reservationRepository.findAll(PageRequest.of(page, size)).getContent();
         List<ReservationDto> listFinal = new ArrayList<>();
 
-        for(int i = 0;i<list.size();i++){
-            ReservationEntity entity = list.get(i);
-            ReservationDto dto = this.toDto(entity);
-            listFinal.add(dto);
+        for(ReservationEntity entity: list){
+            listFinal.add(this.toDto(entity));
         }
         return listFinal;
     }

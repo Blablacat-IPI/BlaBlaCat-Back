@@ -21,9 +21,6 @@ public class ReservationController {
     @Autowired
     private IReservationService reservationService;
 
-    @Autowired
-    private ReservationRepository reservationRepository;
-
     @PostMapping("add")
     public ResponseEntity add(@RequestBody ReservationDto reservationDto){
         Integer id = reservationService.save(reservationDto);
