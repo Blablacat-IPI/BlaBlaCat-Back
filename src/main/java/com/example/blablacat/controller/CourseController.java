@@ -20,9 +20,14 @@ public class CourseController {
     @GetMapping("all")
     public List<CourseDto> getAllCourse() { return service.getAllCourse();}
 
+    @GetMapping("allValid")
+    public List<CourseDto> getAllCoursesValid(){
+        return service.getAllCoursesValid();
+    }
+
     @GetMapping("searchcity/{city}")
     public List<CourseDto> getSearchCity(@PathVariable String city ) {
-        return service.getAllCity(city);
+        return service.getAllCoursesByCity(city);
     }
 
     @PostMapping("add")

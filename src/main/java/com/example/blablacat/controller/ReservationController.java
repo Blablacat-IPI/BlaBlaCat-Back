@@ -6,6 +6,8 @@ import com.example.blablacat.entity.ReservationEntity;
 import com.example.blablacat.repository.ReservationRepository;
 import com.example.blablacat.services.IReservationService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -42,6 +44,19 @@ public class ReservationController {
     @GetMapping("all")
     public List<ReservationDto> all(){
       return reservationService.getAllCourses();
+    }
+
+    @GetMapping("all2")
+    public List<ReservationDto> all2(@RequestParam Integer page, @RequestParam Integer size){
+        List<ReservationEntity> list = reservationRepository.findAll(PageRequest.of(page, size)).getContent();
+        List<ReservationDto> listFinal = new ArrayList<>();
+
+        for(int i = 0;i<list.size();i++){
+            ReservationEntity entity = list.get(i);
+            ReservationDto dto = reservationService.toDto(entity);
+            listFinal.add(dto);
+        }
+        return listFinal;
     }
 
 }
