@@ -11,15 +11,22 @@ import java.util.Optional;
 public interface UserRepository extends JpaRepository<UserEntity, Integer> {
 
     /**
-     * Récupère un User en BDD à partir de son username
+     * Récupère un User à partir de son username
      * @param username
      * @return l'user
      */
     Optional<UserEntity> findByUsername(String username);
+    //A Supprimer ?
 
     /**
-     * Récupère en BDD tous les Users qui ont le champ valid_by_admin null
-     * @return une List de UserEntity
+     * Récupère les Users avec validate_by_admin = true + deleted_at = null
+     * @return List de UserEntity
+     */
+    List<UserEntity> findAllByValidateAdminTrueAndDeletedAtNull();
+
+    /**
+     * Récupère les Users avec valid_by_admin = null
+     * @return List de UserEntity
      */
     List<UserEntity> findAllByValidateAdminNull();
 

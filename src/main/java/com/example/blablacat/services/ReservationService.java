@@ -1,6 +1,5 @@
 package com.example.blablacat.services;
 
-import com.example.blablacat.dto.CourseDto;
 import com.example.blablacat.dto.ReservationDto;
 import com.example.blablacat.entity.CourseEntity;
 import com.example.blablacat.entity.UserEntity;
@@ -9,7 +8,10 @@ import com.example.blablacat.repository.CourseRepository;
 import com.example.blablacat.repository.UserRepository;
 import com.example.blablacat.repository.ReservationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.w3c.dom.css.Counter;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -27,16 +29,15 @@ public class ReservationService implements IReservationService {
 
     @Override
     public ReservationDto toDto(ReservationEntity reservationEntity ) {
-        ReservationDto reservationDto = new ReservationDto();
-        reservationDto.setDisplayName(reservationEntity.getUserEntity().getFirstName() + " " + reservationEntity.getUserEntity().getLastName() );
-        reservationDto.setDisplayArrivalAddress("Arrivée : " + reservationEntity.getCourseEntity().getStreetArrival() + " " + reservationEntity.getCourseEntity().getArrivalZipCode() + " " + reservationEntity.getCourseEntity().getCityArrival());
-        reservationDto.setDisplayDepartureAddress("Départ : " + reservationEntity.getCourseEntity().getDepartureZipCode() + " " + reservationEntity.getCourseEntity().getStreetDeparture() + " " + reservationEntity.getCourseEntity().getCityDeparture());
-        reservationDto.setUser_id(reservationEntity.getUserEntity().getId());
-        reservationDto.setCourse_id(reservationEntity.getCourseEntity().getId());
-        reservationDto.setDisplayDate(reservationEntity.getCourseEntity().getDate());
-        reservationDto.setNumberPlace(reservationEntity.getCourseEntity().getNumberPlace());
-
-        return reservationDto;
+        ReservationDto userHasCourseDto = new ReservationDto();
+        userHasCourseDto.setDisplayName(reservationEntity.getUserEntity().getFirstName() + " " + reservationEntity.getUserEntity().getLastName() );
+        userHasCourseDto.setUserName(reservationEntity.getUserEntity().getUsername());
+        userHasCourseDto.setDisplayArrivalAddress(reservationEntity.getCourseEntity().getStreetArrival() + ", " + reservationEntity.getCourseEntity().getArrivalZipCode() + " " + reservationEntity.getCourseEntity().getCityArrival());
+        userHasCourseDto.setDisplayDepartureAddress(reservationEntity.getCourseEntity().getStreetDeparture() + ", " + reservationEntity.getCourseEntity().getDepartureZipCode() + " " + reservationEntity.getCourseEntity().getCityDeparture());
+        userHasCourseDto.setUser_id(reservationEntity.getUserEntity().getId());
+        userHasCourseDto.setCourse_id(reservationEntity.getCourseEntity().getId());
+        userHasCourseDto.setDisplayDate(reservationEntity.getCourseEntity().getDate());
+        return userHasCourseDto;
     }
 
     @Override
@@ -46,29 +47,47 @@ public class ReservationService implements IReservationService {
 
 
     @Override
-    public  Integer addReservation(CourseDto courseDto) {
+    public  Integer save(ReservationDto dto) {
             ReservationEntity entity = new ReservationEntity();
-            UserEntity userEntity = userRepository.findById(10).get();
+            UserEntity userEntity = userRepository.findById(dto.getUser_id()).get();
             entity.setUserEntity(userEntity);
-            CourseEntity courseEntity = courseRepository.findById(courseDto.getId()).get();
+            CourseEntity courseEntity = courseRepository.findById(dto.getCourse_id()).get();
             entity.setCourseEntity(courseEntity);
             entity.setCreatedAt(LocalDateTime.now());
+
             entity = reservationRepository.saveAndFlush(entity);
             return entity.getUser_has_course_id();
         }
 
     @Override
-    public List<ReservationDto> getAllCourses() {
+    public List<ReservationDto> getAllReservations() {
+            List<ReservationEntity> list = reservationRepository.findAll();
+            List<ReservationDto> listFinal = new ArrayList<>();
+
+            for(ReservationEntity entity: list){
+                listFinal.add(this.toDto(entity));
+            }
+            return listFinal;
+        }
+
+    @Override
+    public Integer numberPageMax() {
         List<ReservationEntity> list = reservationRepository.findAll();
+        return list.size() / 3 ;
+    }
+
+
+    @Override
+    public List<ReservationDto> getAllReservationsPage(Integer page, Integer size) {
+        List<ReservationEntity> list = reservationRepository.findAll(PageRequest.of(page, size)).getContent();
         List<ReservationDto> listFinal = new ArrayList<>();
 
-        for (int i = 0; i < list.size(); i++) {
-            ReservationEntity entity = list.get(i);
-            ReservationDto dto = this.toDto(entity);
-            listFinal.add(dto);
+        for(ReservationEntity entity: list){
+            listFinal.add(this.toDto(entity));
         }
         return listFinal;
     }
+
     @Override
     public Boolean exists(Integer id) {
         return reservationRepository.existsById(id);

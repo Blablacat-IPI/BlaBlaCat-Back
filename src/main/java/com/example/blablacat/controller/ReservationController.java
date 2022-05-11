@@ -1,19 +1,12 @@
 package com.example.blablacat.controller;
 
-import com.example.blablacat.dto.CourseDto;
 import com.example.blablacat.dto.ReservationDto;
-import com.example.blablacat.entity.ReservationEntity;
-import com.example.blablacat.repository.ReservationRepository;
-import com.example.blablacat.services.ICourseService;
 import com.example.blablacat.services.IReservationService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @CrossOrigin(origins="http://localhost:4200")
@@ -23,14 +16,9 @@ public class ReservationController {
     @Autowired
     private IReservationService reservationService;
 
-    @Autowired
-    ICourseService courseService;
-    @Autowired
-    private ReservationRepository reservationRepository;
-
     @PostMapping("add")
-    public ResponseEntity add(@RequestBody CourseDto courseDto){
-        Integer id = reservationService.addReservation(courseDto);
+    public ResponseEntity add(@RequestBody ReservationDto reservationDto){
+        Integer id = reservationService.save(reservationDto);
         return new ResponseEntity(id, HttpStatus.OK);
     };
 
@@ -46,20 +34,20 @@ public class ReservationController {
 
     @GetMapping("all")
     public List<ReservationDto> all(){
-      return reservationService.getAllCourses();
+      return reservationService.getAllReservations();
     }
 
-    @GetMapping("all2")
-    public List<ReservationDto> all2(@RequestParam Integer page, @RequestParam Integer size){
-        List<ReservationEntity> list = reservationRepository.findAll(PageRequest.of(page, size)).getContent();
-        List<ReservationDto> listFinal = new ArrayList<>();
-
-        for(int i = 0;i<list.size();i++){
-            ReservationEntity entity = list.get(i);
-            ReservationDto dto = reservationService.toDto(entity);
-            listFinal.add(dto);
-        }
-        return listFinal;
+    @GetMapping("pagemax")
+    public Integer pageMax() {
+        return reservationService.numberPageMax();
     }
+
+    @GetMapping("Page")
+    public List<ReservationDto> Page(@RequestParam Integer page){
+        Integer size = 3;
+        return reservationService.getAllReservationsPage(page, size);
+    }
+
+
 
 }
