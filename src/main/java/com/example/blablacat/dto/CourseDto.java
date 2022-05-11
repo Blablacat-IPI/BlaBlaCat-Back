@@ -13,7 +13,6 @@ public class CourseDto {
     private String cityDeparture;
     private Integer departureZipCode;
     private String streetDeparture;
-
     private String cityArrival;
     private Integer arrivalZipCode;
     private String streetArrival;

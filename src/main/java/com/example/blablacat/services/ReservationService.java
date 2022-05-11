@@ -34,6 +34,7 @@ public class ReservationService implements IReservationService {
         reservationDto.setUser_id(reservationEntity.getUserEntity().getId());
         reservationDto.setCourse_id(reservationEntity.getCourseEntity().getId());
         reservationDto.setDisplayDate(reservationEntity.getCourseEntity().getDate());
+        reservationDto.setNumberPlace(reservationEntity.getCourseEntity().getNumberPlace());
 
         return reservationDto;
     }
@@ -52,24 +53,22 @@ public class ReservationService implements IReservationService {
             CourseEntity courseEntity = courseRepository.findById(courseDto.getId()).get();
             entity.setCourseEntity(courseEntity);
             entity.setCreatedAt(LocalDateTime.now());
-
             entity = reservationRepository.saveAndFlush(entity);
             return entity.getUser_has_course_id();
         }
 
     @Override
     public List<ReservationDto> getAllCourses() {
-            List<ReservationEntity> list = reservationRepository.findAll();
-            List<ReservationDto> listFinal = new ArrayList<>();
+        List<ReservationEntity> list = reservationRepository.findAll();
+        List<ReservationDto> listFinal = new ArrayList<>();
 
-            for(int i = 0;i<list.size();i++){
-                ReservationEntity entity = list.get(i);
-                ReservationDto dto = this.toDto(entity);
-                listFinal.add(dto);
-            }
-            return listFinal;
+        for (int i = 0; i < list.size(); i++) {
+            ReservationEntity entity = list.get(i);
+            ReservationDto dto = this.toDto(entity);
+            listFinal.add(dto);
         }
-
+        return listFinal;
+    }
     @Override
     public Boolean exists(Integer id) {
         return reservationRepository.existsById(id);

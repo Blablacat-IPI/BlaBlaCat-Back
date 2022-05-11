@@ -4,6 +4,7 @@ import com.example.blablacat.dto.CourseDto;
 import com.example.blablacat.dto.ReservationDto;
 import com.example.blablacat.entity.ReservationEntity;
 import com.example.blablacat.repository.ReservationRepository;
+import com.example.blablacat.services.ICourseService;
 import com.example.blablacat.services.IReservationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -22,6 +23,8 @@ public class ReservationController {
     @Autowired
     private IReservationService reservationService;
 
+    @Autowired
+    ICourseService courseService;
     @Autowired
     private ReservationRepository reservationRepository;
 
