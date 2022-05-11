@@ -14,6 +14,7 @@ public interface IReservationService {
 
     List<ReservationDto> getAllCourses();
 
+    Integer numberPageMax();
     List<ReservationDto> getAllCoursesPage(Integer page, Integer size);
 
     Boolean exists(Integer id);
