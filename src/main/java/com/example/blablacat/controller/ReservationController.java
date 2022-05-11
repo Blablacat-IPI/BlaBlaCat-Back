@@ -20,7 +20,7 @@ public class ReservationController {
     private IReservationService reservationService;
 
     @Autowired
-    private ReservationRepository userHasCourseRepository;
+    private ReservationRepository reservationRepository;
 
     @PostMapping("add")
     public ResponseEntity add(@RequestBody ReservationDto userHasCourseDto){
@@ -40,7 +40,7 @@ public class ReservationController {
 
     @GetMapping("all")
     public List<ReservationDto> all(){
-        List<ReservationEntity> list = userHasCourseRepository.findAll();
+        List<ReservationEntity> list = reservationRepository.findAll();
         List<ReservationDto> listFinal = new ArrayList<>();
 
         for(int i = 0;i<list.size();i++){
