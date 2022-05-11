@@ -8,7 +8,10 @@ import com.example.blablacat.repository.CourseRepository;
 import com.example.blablacat.repository.UserRepository;
 import com.example.blablacat.repository.ReservationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.w3c.dom.css.Counter;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -28,6 +31,7 @@ public class ReservationService implements IReservationService {
     public ReservationDto toDto(ReservationEntity reservationEntity ) {
         ReservationDto userHasCourseDto = new ReservationDto();
         userHasCourseDto.setDisplayName(reservationEntity.getUserEntity().getFirstName() + " " + reservationEntity.getUserEntity().getLastName() );
+        userHasCourseDto.setUserName(reservationEntity.getUserEntity().getUsername());
         userHasCourseDto.setDisplayArrivalAddress("Arrivée : " + reservationEntity.getCourseEntity().getStreetArrival() + " " + reservationEntity.getCourseEntity().getArrivalZipCode() + " " + reservationEntity.getCourseEntity().getCityArrival());
         userHasCourseDto.setDisplayDepartureAddress("Départ : " + reservationEntity.getCourseEntity().getDepartureZipCode() + " " + reservationEntity.getCourseEntity().getStreetDeparture() + " " + reservationEntity.getCourseEntity().getCityDeparture());
         userHasCourseDto.setUser_id(reservationEntity.getUserEntity().getId());
@@ -67,6 +71,20 @@ public class ReservationService implements IReservationService {
             }
             return listFinal;
         }
+
+
+    @Override
+    public List<ReservationDto> getAllCoursesPage(Integer page, Integer size) {
+        List<ReservationEntity> list = reservationRepository.findAll(PageRequest.of(page, size)).getContent();
+        List<ReservationDto> listFinal = new ArrayList<>();
+
+        for(int i = 0;i<list.size();i++){
+            ReservationEntity entity = list.get(i);
+            ReservationDto dto = this.toDto(entity);
+            listFinal.add(dto);
+        }
+        return listFinal;
+    }
 
     @Override
     public Boolean exists(Integer id) {
