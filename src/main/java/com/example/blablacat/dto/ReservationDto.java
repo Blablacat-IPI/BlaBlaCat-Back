@@ -2,7 +2,7 @@ package com.example.blablacat.dto;
 
 import java.time.LocalDateTime;
 
-public class AddUserToCourseDto {
+public class ReservationDto {
     private Integer user_id;
     private Integer course_id;
 
