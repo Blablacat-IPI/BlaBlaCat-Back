@@ -5,7 +5,7 @@ import com.example.blablacat.entity.CourseEntity;
 import com.example.blablacat.entity.UserEntity;
 import com.example.blablacat.entity.ReservationEntity;
 import com.example.blablacat.repository.CourseRepository;
-import com.example.blablacat.repository.RepositoryUser;
+import com.example.blablacat.repository.UserRepository;
 import com.example.blablacat.repository.ReservationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,7 +18,7 @@ public class ReservationService implements IReservationService {
     ReservationRepository reservationRepository;
 
     @Autowired
-    RepositoryUser userRepository;
+    UserRepository userRepository;
     @Autowired
     CourseRepository courseRepository;
 

@@ -2,7 +2,7 @@ package com.example.blablacat.services;
 
 import com.example.blablacat.dto.UserDto;
 import com.example.blablacat.entity.UserEntity;
-import com.example.blablacat.repository.RepositoryUser;
+import com.example.blablacat.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,7 +14,7 @@ import java.util.List;
 public class UserService implements IUserService {
 
     @Autowired
-    private RepositoryUser repository;
+    private UserRepository repository;
 
     @Override
     public UserDto toDto(UserEntity entity) {

@@ -23,8 +23,8 @@ public class ReservationController {
     private ReservationRepository reservationRepository;
 
     @PostMapping("add")
-    public ResponseEntity add(@RequestBody ReservationDto userHasCourseDto){
-        Integer id = reservationService.save(userHasCourseDto);
+    public ResponseEntity add(@RequestBody ReservationDto reservationDto){
+        Integer id = reservationService.save(reservationDto);
         return new ResponseEntity(id, HttpStatus.OK);
     };
 
