@@ -60,7 +60,7 @@ public class ReservationService implements IReservationService {
         }
 
     @Override
-    public List<ReservationDto> getAllCourses() {
+    public List<ReservationDto> getAllReservations() {
             List<ReservationEntity> list = reservationRepository.findAll();
             List<ReservationDto> listFinal = new ArrayList<>();
 
@@ -73,15 +73,12 @@ public class ReservationService implements IReservationService {
     @Override
     public Integer numberPageMax() {
         List<ReservationEntity> list = reservationRepository.findAll();
-        return list.size() / 10 ;
-
-//        Long taille = reservationRepository.count();
-//        return taille
+        return list.size() / 3 ;
     }
 
 
     @Override
-    public List<ReservationDto> getAllCoursesPage(Integer page, Integer size) {
+    public List<ReservationDto> getAllReservationsPage(Integer page, Integer size) {
         List<ReservationEntity> list = reservationRepository.findAll(PageRequest.of(page, size)).getContent();
         List<ReservationDto> listFinal = new ArrayList<>();
 
