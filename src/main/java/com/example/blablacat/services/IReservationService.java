@@ -5,7 +5,7 @@ import com.example.blablacat.entity.ReservationEntity;
 
 public interface IReservationService {
 
-    ReservationDto toDto(ReservationEntity userHasCourseEntity);
+    ReservationDto toDto(ReservationEntity reservationEntity);
     ReservationDto get (Integer id);
 
     Integer save(ReservationDto dto);

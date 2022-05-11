@@ -3,7 +3,7 @@ package com.example.blablacat.services;
 import com.example.blablacat.dto.CourseDto;
 import com.example.blablacat.entity.CourseEntity;
 import com.example.blablacat.repository.CourseRepository;
-import com.example.blablacat.repository.RepositoryUser;
+import com.example.blablacat.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -18,7 +18,7 @@ public class CourseService implements ICourseService {
     private CourseRepository repository;
 
     @Autowired
-    private RepositoryUser userRepository;
+    private UserRepository userRepository;
     @Override
     public CourseDto toDto(CourseEntity entity) {
         CourseDto cdto = new CourseDto();
