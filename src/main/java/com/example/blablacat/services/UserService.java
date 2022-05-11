@@ -14,7 +14,7 @@ import java.util.List;
 public class UserService implements IUserService {
 
     @Autowired
-    private UserRepository repository;
+    private UserRepository userRepository;
 
     @Override
     public UserDto toDto(UserEntity entity) {
@@ -36,19 +36,30 @@ public class UserService implements IUserService {
     @Override
     public List<UserDto> getAllUsers() {
 
-        List<UserEntity> list = repository.findAll();
+        List<UserEntity> list = userRepository.findAll();
         List<UserDto> listDto = new ArrayList<>();
 
         for(UserEntity ue : list){
             listDto.add(this.toDto(ue));
         }
 
+        return listDto;
+    }
+
+    @Override
+    public List<UserDto> getAllValidUsers() {
+        List<UserEntity> list = userRepository.findAllByValidateAdminTrueAndDeletedAtNull();
+        List<UserDto> listDto = new ArrayList<>();
+
+        for(UserEntity ue : list){
+            listDto.add(this.toDto(ue));
+        }
         return listDto;
     }
 
     public List<UserDto> getAllUnvalidUsers(){
 
-        List<UserEntity> list = repository.findAllByValidateAdminNull();
+        List<UserEntity> list = userRepository.findAllByValidateAdminNull();
         List<UserDto> listDto = new ArrayList<>();
 
         for(UserEntity ue : list){
@@ -59,47 +70,45 @@ public class UserService implements IUserService {
     }
 
     @Override
-    public Integer addUsers(String username, String idCompany, String lastName, String firstName, String password, String email) {
-        UserEntity ue = new UserEntity();
-        ue.setUsername(username);
-        ue.setIdCompany(idCompany);
-        ue.setLastName(lastName);
-        ue.setFirstName(firstName);
-        ue.setPassword(password);
-        ue.setEmail(email);
+    public Integer addUser(String username, String idCompany, String lastName, String firstName, String password, String email) {
+        UserEntity entity = new UserEntity();
+        entity.setUsername(username);
+        entity.setIdCompany(idCompany);
+        entity.setLastName(lastName);
+        entity.setFirstName(firstName);
+        entity.setPassword(password);
+        entity.setEmail(email);
+        entity.setCreatedAt(LocalDateTime.now());
+        entity.setUpdateAt(LocalDateTime.now());
 
+        userRepository.saveAndFlush(entity);
 
-        ue.setCreatedAt(LocalDateTime.now());
-        ue.setUpdateAt(LocalDateTime.now());
-
-        repository.saveAndFlush(ue);
-        System.out.println(ue.getIdCompany());
-        return ue.getId();
+        return entity.getId();
     }
 
     @Override
     public void deleteUser(Integer id) {
-        repository.deleteById(id);
+        userRepository.deleteById(id);
     }
 
+    //rajouter le control exist() dans le controller
     @Override
     public void softDeleteUser(Integer id) {
-        //rajouter le control exist() dans le controller
-        UserEntity entity = repository.findById(id).get();
+        UserEntity entity = userRepository.findById(id).get();
         entity.setDeletedAt(LocalDateTime.now());
-        repository.save(entity);
+        userRepository.save(entity);
     }
 
     @Override
-    public Boolean validateUserByAdmin(UserDto dto){
-        UserEntity entity = repository.findByUsername(dto.getUsername()).get();
+    public Boolean validateUserByAdmin(Integer id){
+        UserEntity entity = userRepository.findById(id).get();
         entity.setValidateAdmin(true);
-        repository.save(entity);
+        userRepository.save(entity);
         return true;
     }
 
     public Boolean checkExistById(Integer id){
-        return repository.existsById(id);
+        return userRepository.existsById(id);
     }
 
 }

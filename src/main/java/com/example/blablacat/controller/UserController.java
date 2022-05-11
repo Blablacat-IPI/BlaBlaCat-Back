@@ -24,7 +24,11 @@ public class UserController {
         return service.getAllUsers();
     }
 
-    //getAllUnvalidUsers
+    @GetMapping("allValid")
+    public List<UserDto> getAllValid(){
+        return service.getAllValidUsers();
+    }
+
     @GetMapping("allUnvalid")
     public List<UserDto> getAllUnvalid() {
         return service.getAllUnvalidUsers();
@@ -33,7 +37,7 @@ public class UserController {
     @PostMapping("addUser")
     public ResponseEntity<Integer> addUsers(@RequestBody UserDto udto) {
 
-        Integer id = service.addUsers( udto.getUsername(), udto.getIdCompany(), udto.getLastName(), udto.getFirstName(), udto.getPassword(), udto.getEmail());
+        Integer id = service.addUser( udto.getUsername(), udto.getIdCompany(), udto.getLastName(), udto.getFirstName(), udto.getPassword(), udto.getEmail());
 
         try {
             return new ResponseEntity<>(id, HttpStatus.OK);
@@ -42,12 +46,12 @@ public class UserController {
         }
     }
 
-    @PostMapping("validateByAdmin")
-    public ResponseEntity<Boolean> validateByAdmin(@RequestBody UserDto uDto) {
+    @PostMapping("validateByAdmin/{id}")
+    public ResponseEntity<Boolean> validateByAdmin(@PathVariable("id") Integer id) {
 
         try {
-            if(service.checkExistById(uDto.getId())){
-                Boolean reponse = service.validateUserByAdmin(uDto);
+            if(service.checkExistById(id)){
+                Boolean reponse = service.validateUserByAdmin(id);
                 return new ResponseEntity(reponse, HttpStatus.OK);
             }else{
                 return new ResponseEntity("Cet User n'existe pas", HttpStatus.NOT_FOUND);
@@ -58,14 +62,13 @@ public class UserController {
         }
     }
 
-
     @DeleteMapping("deleteUser/{id}")
-    public void deleteUsers(@PathVariable("id") Integer id) {
+    public void deleteUser(@PathVariable("id") Integer id) {
         service.deleteUser(id);
     }
 
     @DeleteMapping("softDeleteUser/{id}")
-    public void softDeleteUsers(@PathVariable("id") Integer id) {
+    public void softDeleteUser(@PathVariable("id") Integer id) {
 
         if (service.checkExistById(id)){
             service.softDeleteUser(id);
