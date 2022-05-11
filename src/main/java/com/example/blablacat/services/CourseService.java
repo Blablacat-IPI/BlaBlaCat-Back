@@ -3,6 +3,7 @@ package com.example.blablacat.services;
 import com.example.blablacat.dto.CourseDto;
 import com.example.blablacat.entity.CourseEntity;
 import com.example.blablacat.repository.CourseRepository;
+import com.example.blablacat.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,10 +17,12 @@ public class CourseService implements ICourseService {
     @Autowired
     private CourseRepository repository;
 
+    @Autowired
+    private UserRepository userRepository;
     @Override
     public CourseDto toDto(CourseEntity entity) {
         CourseDto cdto = new CourseDto();
-        cdto.setIdDriver(entity.getIdDriver());
+        cdto.setDriverUsername(entity.getUserEntity().getUsername());
         cdto.setDate(entity.getDate());
         cdto.setCityDeparture(entity.getCityDeparture());
         cdto.setDepartureZipCode(entity.getDepartureZipCode());
@@ -61,7 +64,7 @@ public class CourseService implements ICourseService {
     public Integer addCourse(LocalDateTime date, String cityDeparture, Integer departureZipCode, String streetDeparture, String cityArrival, Integer arrivalZipCode, String streetArrival, Integer numberPlace) {
         CourseEntity courseEntity = new CourseEntity();
         courseEntity.setDate(date);
-        courseEntity.setIdDriver(10);
+        courseEntity.setUserEntity(userRepository.findById(10).get());
         courseEntity.setCityDeparture(cityDeparture);
         courseEntity.setDepartureZipCode(departureZipCode);
         courseEntity.setStreetDeparture(streetDeparture);

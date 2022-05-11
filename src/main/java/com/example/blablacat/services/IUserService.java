@@ -13,6 +13,8 @@ public interface IUserService {
 
     void deleteUser(Integer id);
 
+    void softDeleteUser(Integer id);
+
     List<UserDto> getAllUnvalidUsers();
 
     Integer addUsers(String lastName, String firstName, String username, String idCompany, String email, String password );

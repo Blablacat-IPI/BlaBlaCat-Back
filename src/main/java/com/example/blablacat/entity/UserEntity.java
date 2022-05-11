@@ -2,7 +2,6 @@ package com.example.blablacat.entity;
 
 import javax.persistence.*;
 
-import org.apache.catalina.User;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 
@@ -54,7 +53,28 @@ public class UserEntity {
 
     @OneToMany
     @JoinColumn(name="user_id", referencedColumnName = "id")
-    private List<UserHasCourseEntity> userHasCourseEntityList;
+    private List<ReservationEntity> userHasCourseEntityList;
+
+    @OneToMany
+    @JoinColumn(name="id_driver", referencedColumnName = "id")
+    private List<CourseEntity> courseEntityList;
+
+    public List<ReservationEntity> getUserHasCourseEntityList() {
+        return userHasCourseEntityList;
+    }
+
+    public void setUserHasCourseEntityList(List<ReservationEntity> userHasCourseEntityList) {
+        this.userHasCourseEntityList = userHasCourseEntityList;
+    }
+
+    public List<CourseEntity> getCourseEntityList() {
+        return courseEntityList;
+    }
+
+    public void setCourseEntityList(List<CourseEntity> courseEntityList) {
+        this.courseEntityList = courseEntityList;
+    }
+
     public Integer getId() {
         return id;
     }

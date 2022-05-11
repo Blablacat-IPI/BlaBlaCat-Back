@@ -2,7 +2,7 @@ package com.example.blablacat.services;
 
 import com.example.blablacat.dto.UserDto;
 import com.example.blablacat.entity.UserEntity;
-import com.example.blablacat.repository.RepositoryUser;
+import com.example.blablacat.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,7 +14,7 @@ import java.util.List;
 public class UserService implements IUserService {
 
     @Autowired
-    private RepositoryUser repository;
+    private UserRepository repository;
 
     @Override
     public UserDto toDto(UserEntity entity) {
@@ -82,18 +82,21 @@ public class UserService implements IUserService {
         repository.deleteById(id);
     }
 
+    @Override
+    public void softDeleteUser(Integer id) {
+        //rajouter le control exist() dans le controller
+        UserEntity entity = repository.findById(id).get();
+
+
+    }
+
 
     @Override
     public Boolean validateUserByAdmin(UserDto dto){
-
-        //Si courage et chance, beaucoup de chance
-        //repository.userValidateByAdmin(false, dto.getUsername());
-
-        UserEntity entity = repository.findByUsername(dto.getUsername());
+        //rajouter control exist() dans le controller
+        UserEntity entity = repository.findByUsername(dto.getUsername()).get();
         entity.setValidateAdmin(true);
-        System.out.println("avant la requête");
         repository.save(entity);
-        System.out.println("après la requête");
         return true;
     }
 

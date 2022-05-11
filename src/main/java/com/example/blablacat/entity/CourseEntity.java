@@ -15,8 +15,9 @@ public class CourseEntity {
     @Column(name = "id")
     private Integer id;
 
-    @Column(name = "id_driver")
-    private Integer idDriver;
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "id_driver", referencedColumnName = "id")
+    private UserEntity userEntity;
 
     @Column(name = "date")
     private LocalDateTime date;
@@ -53,6 +54,14 @@ public class CourseEntity {
     @Column(name = "deleted_at")
     private LocalDateTime deletedAt;
 
+    public UserEntity getUserEntity() {
+        return userEntity;
+    }
+
+    public void setUserEntity(UserEntity userEntity) {
+        this.userEntity = userEntity;
+    }
+
     public Integer getDepartureZipCode() {
         return departureZipCode;
     }
@@ -75,14 +84,6 @@ public class CourseEntity {
 
     public void setId(Integer id) {
         this.id = id;
-    }
-
-    public Integer getIdDriver() {
-        return idDriver;
-    }
-
-    public void setIdDriver(Integer idDriver) {
-        this.idDriver = idDriver;
     }
 
     public LocalDateTime getDate() {

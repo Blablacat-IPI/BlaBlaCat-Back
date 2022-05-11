@@ -1,6 +1,8 @@
 package com.example.blablacat.dto;
 
-public class AddUserToCourseDto {
+import java.time.LocalDateTime;
+
+public class ReservationDto {
     private Integer user_id;
     private Integer course_id;
 
@@ -9,6 +11,16 @@ public class AddUserToCourseDto {
     private String displayDepartureAddress;
 
     private String displayArrivalAddress;
+
+    private LocalDateTime displayDate;
+
+    public LocalDateTime getDisplayDate() {
+        return displayDate;
+    }
+
+    public void setDisplayDate(LocalDateTime displayDate) {
+        this.displayDate = displayDate;
+    }
 
     public String getDisplayName() {
         return displayName;

@@ -59,4 +59,10 @@ public class UserController {
     public void deleteUsers(@PathVariable("id") Integer id) {
         service.deleteUser(id);
     }
+
+    @DeleteMapping("softDeleteUser/{id}")
+    public void softDeleteUsers(@PathVariable("id") Integer id) {
+        service.softDeleteUser(id);
+    }
+
 }
