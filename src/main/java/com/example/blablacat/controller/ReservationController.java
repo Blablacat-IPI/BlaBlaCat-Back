@@ -40,15 +40,7 @@ public class ReservationController {
 
     @GetMapping("all")
     public List<ReservationDto> all(){
-        List<ReservationEntity> list = reservationRepository.findAll();
-        List<ReservationDto> listFinal = new ArrayList<>();
-
-        for(int i = 0;i<list.size();i++){
-            ReservationEntity entity = list.get(i);
-            ReservationDto dto = reservationService.toDto(entity);
-            listFinal.add(dto);
-        }
-        return listFinal;
+      return reservationService.getAllCourses();
     }
 
 }

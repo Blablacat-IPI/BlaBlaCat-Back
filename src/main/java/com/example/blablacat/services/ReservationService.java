@@ -11,6 +11,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 public class ReservationService implements IReservationService {
@@ -39,6 +41,7 @@ public class ReservationService implements IReservationService {
         return toDto(reservationRepository.findById(id).get());
     }
 
+
     @Override
     public  Integer save(ReservationDto dto) {
             ReservationEntity entity = new ReservationEntity();
@@ -50,6 +53,19 @@ public class ReservationService implements IReservationService {
 
             entity = reservationRepository.saveAndFlush(entity);
             return entity.getUser_has_course_id();
+        }
+
+    @Override
+    public List<ReservationDto> getAllCourses() {
+            List<ReservationEntity> list = reservationRepository.findAll();
+            List<ReservationDto> listFinal = new ArrayList<>();
+
+            for(int i = 0;i<list.size();i++){
+                ReservationEntity entity = list.get(i);
+                ReservationDto dto = this.toDto(entity);
+                listFinal.add(dto);
+            }
+            return listFinal;
         }
 
     @Override
