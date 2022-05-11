@@ -45,17 +45,10 @@ public class ReservationController {
       return reservationService.getAllCourses();
     }
 
-    @GetMapping("all2")
-    public List<ReservationDto> all2(@RequestParam Integer page, @RequestParam Integer size){
-        List<ReservationEntity> list = reservationRepository.findAll(PageRequest.of(page, size)).getContent();
-        List<ReservationDto> listFinal = new ArrayList<>();
-
-        for(int i = 0;i<list.size();i++){
-            ReservationEntity entity = list.get(i);
-            ReservationDto dto = reservationService.toDto(entity);
-            listFinal.add(dto);
-        }
-        return listFinal;
+    @GetMapping("Page")
+    public List<ReservationDto> Page(@RequestParam Integer page, Integer size){
+        return reservationService.getAllCoursesPage(page, size);
     }
+
 
 }
