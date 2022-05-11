@@ -73,7 +73,7 @@ public class ReservationService implements IReservationService {
     @Override
     public Integer numberPageMax() {
         List<ReservationEntity> list = reservationRepository.findAll();
-        return list.size() / 10 ;
+        return list.size() / 3 ;
 
 //        Long taille = reservationRepository.count();
 //        return taille
