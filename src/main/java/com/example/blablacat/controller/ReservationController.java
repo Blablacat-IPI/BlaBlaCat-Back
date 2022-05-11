@@ -1,5 +1,6 @@
 package com.example.blablacat.controller;
 
+import com.example.blablacat.dto.CourseDto;
 import com.example.blablacat.dto.ReservationDto;
 import com.example.blablacat.entity.ReservationEntity;
 import com.example.blablacat.repository.ReservationRepository;
@@ -23,8 +24,8 @@ public class ReservationController {
     private ReservationRepository reservationRepository;
 
     @PostMapping("add")
-    public ResponseEntity add(@RequestBody ReservationDto reservationDto){
-        Integer id = reservationService.save(reservationDto);
+    public ResponseEntity add(@RequestBody CourseDto courseDto){
+        Integer id = reservationService.addReservation(courseDto);
         return new ResponseEntity(id, HttpStatus.OK);
     };
 

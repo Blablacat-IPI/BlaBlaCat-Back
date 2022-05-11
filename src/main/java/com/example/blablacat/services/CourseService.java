@@ -22,6 +22,7 @@ public class CourseService implements ICourseService {
     @Override
     public CourseDto toDto(CourseEntity entity) {
         CourseDto cdto = new CourseDto();
+        cdto.setId(entity.getId());
         cdto.setDriverUsername(entity.getUserEntity().getUsername());
         cdto.setDate(entity.getDate());
         cdto.setCityDeparture(entity.getCityDeparture());

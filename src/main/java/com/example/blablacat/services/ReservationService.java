@@ -1,5 +1,6 @@
 package com.example.blablacat.services;
 
+import com.example.blablacat.dto.CourseDto;
 import com.example.blablacat.dto.ReservationDto;
 import com.example.blablacat.entity.CourseEntity;
 import com.example.blablacat.entity.UserEntity;
@@ -26,14 +27,15 @@ public class ReservationService implements IReservationService {
 
     @Override
     public ReservationDto toDto(ReservationEntity reservationEntity ) {
-        ReservationDto userHasCourseDto = new ReservationDto();
-        userHasCourseDto.setDisplayName(reservationEntity.getUserEntity().getFirstName() + " " + reservationEntity.getUserEntity().getLastName() );
-        userHasCourseDto.setDisplayArrivalAddress("Arrivée : " + reservationEntity.getCourseEntity().getStreetArrival() + " " + reservationEntity.getCourseEntity().getArrivalZipCode() + " " + reservationEntity.getCourseEntity().getCityArrival());
-        userHasCourseDto.setDisplayDepartureAddress("Départ : " + reservationEntity.getCourseEntity().getDepartureZipCode() + " " + reservationEntity.getCourseEntity().getStreetDeparture() + " " + reservationEntity.getCourseEntity().getCityDeparture());
-        userHasCourseDto.setUser_id(reservationEntity.getUserEntity().getId());
-        userHasCourseDto.setCourse_id(reservationEntity.getCourseEntity().getId());
-        userHasCourseDto.setDisplayDate(reservationEntity.getCourseEntity().getDate());
-        return userHasCourseDto;
+        ReservationDto reservationDto = new ReservationDto();
+        reservationDto.setDisplayName(reservationEntity.getUserEntity().getFirstName() + " " + reservationEntity.getUserEntity().getLastName() );
+        reservationDto.setDisplayArrivalAddress("Arrivée : " + reservationEntity.getCourseEntity().getStreetArrival() + " " + reservationEntity.getCourseEntity().getArrivalZipCode() + " " + reservationEntity.getCourseEntity().getCityArrival());
+        reservationDto.setDisplayDepartureAddress("Départ : " + reservationEntity.getCourseEntity().getDepartureZipCode() + " " + reservationEntity.getCourseEntity().getStreetDeparture() + " " + reservationEntity.getCourseEntity().getCityDeparture());
+        reservationDto.setUser_id(reservationEntity.getUserEntity().getId());
+        reservationDto.setCourse_id(reservationEntity.getCourseEntity().getId());
+        reservationDto.setDisplayDate(reservationEntity.getCourseEntity().getDate());
+
+        return reservationDto;
     }
 
     @Override
@@ -43,11 +45,11 @@ public class ReservationService implements IReservationService {
 
 
     @Override
-    public  Integer save(ReservationDto dto) {
+    public  Integer addReservation(CourseDto courseDto) {
             ReservationEntity entity = new ReservationEntity();
-            UserEntity userEntity = userRepository.findById(dto.getUser_id()).get();
+            UserEntity userEntity = userRepository.findById(10).get();
             entity.setUserEntity(userEntity);
-            CourseEntity courseEntity = courseRepository.findById(dto.getCourse_id()).get();
+            CourseEntity courseEntity = courseRepository.findById(courseDto.getId()).get();
             entity.setCourseEntity(courseEntity);
             entity.setCreatedAt(LocalDateTime.now());
 
