@@ -15,4 +15,6 @@ public interface CourseRepository extends JpaRepository<CourseEntity, Integer> {
 
     List<CourseEntity> findAllByDeletedAtNullAndDateAfter(LocalDateTime dateMin);
 
+    List<CourseEntity> findFirst5ByOrderByCreatedAtDesc();
+
 }
