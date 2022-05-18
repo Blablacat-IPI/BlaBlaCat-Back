@@ -39,14 +39,21 @@ public class ReservationController {
 
     @GetMapping("pagemax")
     public Integer pageMax() {
-        return reservationService.numberPageMax();
+        //uniquement avec user 10 pour le moment, rajouter le @Request param user id et changer dans service d'angular plus tard
+        return reservationService.numberPageMaxReservationByUser();
     }
 
     @GetMapping("Page")
     public List<ReservationDto> Page(@RequestParam Integer page){
+<<<<<<< HEAD
         Integer size = 3;
         return reservationService.getAllReservationsPage(page, size);
 
+=======
+        Integer size = 5;
+        //uniquement avec user 10 pour le moment, rajouter le @Request param user id et changer dans service d'angular plus tard
+        return reservationService.getAllReservationsByUserPage(page, size);
+>>>>>>> 14819cf71d5e32ef2bf4e1cedc09740e11ad0ca0
     }
 
 
