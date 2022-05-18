@@ -10,8 +10,6 @@ import com.example.blablacat.repository.ReservationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.w3c.dom.css.Counter;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -74,12 +72,6 @@ public class ReservationService implements IReservationService {
     public Integer numberPageMax() {
         List<ReservationEntity> list = reservationRepository.findAll();
         return list.size() / 3 ;
-<<<<<<< HEAD
-
-//        Long taille = reservationRepository.count();
-//        return taille
-=======
->>>>>>> 0f02a9f6c74f6792562277e12e32f2baa35973a0
     }
 
 

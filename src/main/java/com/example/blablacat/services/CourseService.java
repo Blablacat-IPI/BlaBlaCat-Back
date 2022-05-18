@@ -61,6 +61,19 @@ public class CourseService implements ICourseService {
         return listDto;
     }
 
+    @Override
+    public List<CourseDto> getLastFiveCoursesCreated() {
+        List<CourseEntity> list = repository.findFirst5ByOrderByCreatedAtDesc();
+
+        List<CourseDto> listDto = new ArrayList<>();
+
+        for(CourseEntity entity : list){
+            listDto.add(this.toDto(entity));
+        }
+
+        return listDto;
+    }
+
 
     @Override
     public List<CourseDto> getAllCoursesByCity(String city) {
@@ -72,8 +85,6 @@ public class CourseService implements ICourseService {
         }
         return listDto;
     }
-
-
 
     @Override
     public Integer addCourse(LocalDateTime date, String cityDeparture, Integer departureZipCode, String streetDeparture, String cityArrival, Integer arrivalZipCode, String streetArrival, Integer numberPlace) {

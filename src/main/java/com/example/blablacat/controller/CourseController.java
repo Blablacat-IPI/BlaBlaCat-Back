@@ -25,6 +25,11 @@ public class CourseController {
         return service.getAllCoursesValid();
     }
 
+    @GetMapping("lastFive")
+    public List<CourseDto> getLastFiveCourses(){
+        return service.getLastFiveCoursesCreated();
+    }
+
     @GetMapping("searchcity/{city}")
     public List<CourseDto> getSearchCity(@PathVariable String city ) {
         return service.getAllCoursesByCity(city);

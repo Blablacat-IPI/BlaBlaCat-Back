@@ -10,14 +10,14 @@ public class ReservationDto {
     private String displayArrivalAddress;
     private LocalDateTime displayDate;
 
-    private String username;
+    private String userName;
 
     public String getUserName() {
-        return username;
+        return userName;
     }
 
     public void setUserName(String userName) {
-        this.username = userName;
+        this.userName = userName;
     }
 
     public LocalDateTime getDisplayDate() {

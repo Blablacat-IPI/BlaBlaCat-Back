@@ -45,11 +45,8 @@ public class ReservationController {
     @GetMapping("Page")
     public List<ReservationDto> Page(@RequestParam Integer page){
         Integer size = 3;
-<<<<<<< HEAD
-        return reservationService.getAllCoursesPage(page, size);
-=======
         return reservationService.getAllReservationsPage(page, size);
->>>>>>> 0f02a9f6c74f6792562277e12e32f2baa35973a0
+
     }
 
 
