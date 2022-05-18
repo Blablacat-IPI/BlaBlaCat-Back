@@ -63,7 +63,7 @@ public class CourseService implements ICourseService {
 
     @Override
     public List<CourseDto> getLastFiveCoursesCreated() {
-        List<CourseEntity> list = repository.findFirst5ByOrderByCreatedAtDesc();
+        List<CourseEntity> list = repository.findFirst4ByOrderByCreatedAtDesc();
 
         List<CourseDto> listDto = new ArrayList<>();
 
