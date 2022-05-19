@@ -1,7 +1,6 @@
 package com.example.blablacat.controller;
 
 import com.example.blablacat.dto.CourseDto;
-import com.example.blablacat.dto.ReservationDto;
 import com.example.blablacat.services.ICourseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -53,11 +52,27 @@ public class CourseController {
     }
 
     @GetMapping("pageMyCourses")
+<<<<<<< HEAD
     public List<CourseDto> PageMyCourses(@RequestParam Integer page){
+=======
+    public List<CourseDto> pageMyCourses(@RequestParam Integer page){
+>>>>>>> a50457a04ef6bb05e90886f48a9b03191806f7f8
         Integer size = 5;
         //uniquement avec user 10 pour le moment, rajouter le @Request param user id et changer dans service d'angular plus tard
         return courseService.getAllCoursesByUserPage(page, size);
     }
+
+    @GetMapping("pageMaxAllCourses")
+    public Integer pageMaxAllCourses() {
+        return courseService.numberPageMaxOfCourses();
+    }
+
+    @GetMapping("pageAllCourses")
+    public List<CourseDto> pageAllCourses(@RequestParam Integer page) {
+        Integer size = 12;
+        return courseService.getAllCoursesByPages(page, size);
+    }
+
 
 
 }

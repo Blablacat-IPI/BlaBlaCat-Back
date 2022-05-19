@@ -110,6 +110,23 @@ public class CourseService implements ICourseService {
     }
 
     @Override
+    public Integer numberPageMaxOfCourses() {
+        List<CourseEntity> list = courseRepository.findAll();
+        return list.size() / 12 ;
+    }
+
+    @Override
+    public List<CourseDto> getAllCoursesByPages(Integer page, Integer size) {
+        List<CourseEntity> list = courseRepository.findAll(PageRequest.of(page, size)).getContent();
+        List<CourseDto> listFinal = new ArrayList<>();
+
+        for(CourseEntity entity: list){
+            listFinal.add(this.toDto(entity));
+        }
+        return listFinal;
+    }
+
+    @Override
     public Integer addCourse(LocalDateTime date, String cityDeparture, Integer departureZipCode, String streetDeparture, String cityArrival, Integer arrivalZipCode, String streetArrival, Integer numberPlace) {
         CourseEntity courseEntity = new CourseEntity();
         courseEntity.setDate(date);
