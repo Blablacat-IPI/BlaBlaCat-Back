@@ -48,6 +48,7 @@ public class ReservationController {
         Integer size = 5;
         //uniquement avec user 10 pour le moment, rajouter le @Request param user id et changer dans service d'angular plus tard
         return reservationService.getAllReservationsByUserPage(page, size);
+
     }
 
 

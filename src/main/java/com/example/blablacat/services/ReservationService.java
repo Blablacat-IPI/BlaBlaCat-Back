@@ -29,7 +29,7 @@ public class ReservationService implements IReservationService {
     public ReservationDto toDto(ReservationEntity reservationEntity ) {
         ReservationDto userHasCourseDto = new ReservationDto();
         userHasCourseDto.setDisplayName(reservationEntity.getUserEntity().getFirstName() + " " + reservationEntity.getUserEntity().getLastName() );
-        userHasCourseDto.setUsername(reservationEntity.getUserEntity().getUsername());
+        userHasCourseDto.setUserName(reservationEntity.getUserEntity().getUsername());
         userHasCourseDto.setDisplayArrivalAddress(reservationEntity.getCourseEntity().getStreetArrival() + ", " + reservationEntity.getCourseEntity().getArrivalZipCode() + " " + reservationEntity.getCourseEntity().getCityArrival());
         userHasCourseDto.setDisplayDepartureAddress(reservationEntity.getCourseEntity().getStreetDeparture() + ", " + reservationEntity.getCourseEntity().getDepartureZipCode() + " " + reservationEntity.getCourseEntity().getCityDeparture());
         userHasCourseDto.setUser_id(reservationEntity.getUserEntity().getId());
