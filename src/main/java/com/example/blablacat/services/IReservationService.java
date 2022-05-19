@@ -38,9 +38,9 @@ public interface IReservationService {
      * Calcule le nombre de pages pour 3 réservations/page (pour le moment)
      * @return Integer du nombre de pages
      */
-    Integer numberPageMax();
+    Integer numberPageMaxReservationByUser();
 
-    List<ReservationDto> getAllReservationsPage(Integer page, Integer size);
+    List<ReservationDto> getAllReservationsByUserPage(Integer page, Integer size);
 
     /**
      * Verifie si une Reservation existe en BDD

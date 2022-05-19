@@ -1,17 +1,12 @@
 package com.example.blablacat.controller;
 
 import com.example.blablacat.dto.ReservationDto;
-import com.example.blablacat.entity.ReservationEntity;
-import com.example.blablacat.repository.ReservationRepository;
 import com.example.blablacat.services.IReservationService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @CrossOrigin(origins="http://localhost:4200")
@@ -44,13 +39,16 @@ public class ReservationController {
 
     @GetMapping("pagemax")
     public Integer pageMax() {
-        return reservationService.numberPageMax();
+        //uniquement avec user 10 pour le moment, rajouter le @Request param user id et changer dans service d'angular plus tard
+        return reservationService.numberPageMaxReservationByUser();
     }
 
     @GetMapping("Page")
     public List<ReservationDto> Page(@RequestParam Integer page){
-        Integer size = 3;
-        return reservationService.getAllReservationsPage(page, size);
+        Integer size = 5;
+        //uniquement avec user 10 pour le moment, rajouter le @Request param user id et changer dans service d'angular plus tard
+        return reservationService.getAllReservationsByUserPage(page, size);
+
     }
 
 

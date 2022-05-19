@@ -30,6 +30,12 @@ public interface ICourseService {
     List<CourseDto> getAllCoursesValid();
 
     /**
+     * Récupère les 5 dernières courses crées
+     * @return list de CourseDto
+     */
+    List<CourseDto> getLastFiveCoursesCreated();
+
+    /**
      * Rajoute une course en BDD
      * @param date du trajet (date et heure de départ)
      * @param cityDeparture Ville de départ du trajet

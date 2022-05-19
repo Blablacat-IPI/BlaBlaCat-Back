@@ -10,8 +10,6 @@ import com.example.blablacat.repository.ReservationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.w3c.dom.css.Counter;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -71,15 +69,20 @@ public class ReservationService implements IReservationService {
         }
 
     @Override
-    public Integer numberPageMax() {
-        List<ReservationEntity> list = reservationRepository.findAll();
-        return list.size() / 3 ;
+    public Integer numberPageMaxReservationByUser() {
+        //ist<ReservationEntity> list = reservationRepository.findAll();
+        List<ReservationEntity> list = reservationRepository.findAllByUserEntity(userRepository.findById(10).get());
+        return list.size() / 5 ;
     }
 
 
     @Override
-    public List<ReservationDto> getAllReservationsPage(Integer page, Integer size) {
-        List<ReservationEntity> list = reservationRepository.findAll(PageRequest.of(page, size)).getContent();
+    public List<ReservationDto> getAllReservationsByUserPage(Integer page, Integer size) {
+
+        //List<ReservationEntity> list = reservationRepository.findAll(PageRequest.of(page, size)).getContent();
+        UserEntity user = userRepository.findById(10).get();
+        List<ReservationEntity> list = reservationRepository.findAllByUserEntity(user, PageRequest.of(page, size)).getContent();
+
         List<ReservationDto> listFinal = new ArrayList<>();
 
         for(ReservationEntity entity: list){
