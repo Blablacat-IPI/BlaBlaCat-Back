@@ -1,6 +1,10 @@
 package com.example.blablacat.repository;
 
 import com.example.blablacat.entity.CourseEntity;
+import com.example.blablacat.entity.ReservationEntity;
+import com.example.blablacat.entity.UserEntity;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
@@ -31,5 +35,20 @@ public interface CourseRepository extends JpaRepository<CourseEntity, Integer> {
      * @return List<CourseEntity>
      */
     List<CourseEntity> findFirst5ByOrderByCreatedAtDesc();
+
+    /**
+     * Récupère les courses créées par un User
+     * @param entity
+     * @return List<CourseEntity>
+     */
+    List<CourseEntity> findAllByUserEntity(UserEntity entity);
+
+    /**
+     * Récupère les courses crée par un User et les pagines
+     * @param entity
+     * @param pageable
+     * @return Page<CourseEntity>
+     */
+    Page<CourseEntity> findAllByUserEntity(UserEntity entity, Pageable pageable);
 
 }

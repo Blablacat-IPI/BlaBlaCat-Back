@@ -1,10 +1,14 @@
 package com.example.blablacat.services;
 
 import com.example.blablacat.dto.CourseDto;
+import com.example.blablacat.dto.ReservationDto;
 import com.example.blablacat.entity.CourseEntity;
+import com.example.blablacat.entity.ReservationEntity;
+import com.example.blablacat.entity.UserEntity;
 import com.example.blablacat.repository.CourseRepository;
 import com.example.blablacat.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -15,7 +19,7 @@ import java.util.List;
 public class CourseService implements ICourseService {
 
     @Autowired
-    private CourseRepository repository;
+    private CourseRepository courseRepository;
 
     @Autowired
     private UserRepository userRepository;
@@ -37,7 +41,7 @@ public class CourseService implements ICourseService {
 
     @Override
     public List<CourseDto> getAllCourse() {
-        List<CourseEntity> list = repository.findAll();
+        List<CourseEntity> list = courseRepository.findAll();
         List<CourseDto> listDto = new ArrayList<>();
         for (int i=0; i<list.size(); i++) {
             CourseEntity entity = list.get(i);
@@ -49,7 +53,7 @@ public class CourseService implements ICourseService {
 
     @Override
     public List<CourseDto> getAllCoursesValid() {
-        List<CourseEntity> list = repository.findAllByDeletedAtNullAndDateAfter(LocalDateTime.now());
+        List<CourseEntity> list = courseRepository.findAllByDeletedAtNullAndDateAfter(LocalDateTime.now());
         List<CourseDto> listDto = new ArrayList<>();
 
         for(CourseEntity entity : list){
@@ -63,7 +67,7 @@ public class CourseService implements ICourseService {
 
     @Override
     public List<CourseDto> getLastFiveCoursesCreated() {
-        List<CourseEntity> list = repository.findFirst5ByOrderByCreatedAtDesc();
+        List<CourseEntity> list = courseRepository.findFirst5ByOrderByCreatedAtDesc();
 
         List<CourseDto> listDto = new ArrayList<>();
 
@@ -77,13 +81,32 @@ public class CourseService implements ICourseService {
 
     @Override
     public List<CourseDto> getAllCoursesByCity(String city) {
-        List<CourseEntity> list = repository.findByCityDepartureOrCityArrival(city, city);
+        List<CourseEntity> list = courseRepository.findByCityDepartureOrCityArrival(city, city);
         List<CourseDto> listDto = new ArrayList<>();
 
         for(CourseEntity ce : list) {
             listDto.add(this.toDto(ce));
         }
         return listDto;
+    }
+
+    @Override
+    public Integer numberPageMaxCourseByUser() {
+        List<CourseEntity> list = courseRepository.findAllByUserEntity(userRepository.findById(10).get());
+        return list.size() / 5 ;
+    }
+
+    @Override
+    public List<CourseDto> getAllCoursesByUserPage(Integer page, Integer size) {
+        UserEntity user = userRepository.findById(10).get();
+        List<CourseEntity> list = courseRepository.findAllByUserEntity(user, PageRequest.of(page, size)).getContent();
+
+        List<CourseDto> listFinal = new ArrayList<>();
+
+        for(CourseEntity entity: list){
+            listFinal.add(this.toDto(entity));
+        }
+        return listFinal;
     }
 
     @Override
@@ -100,7 +123,7 @@ public class CourseService implements ICourseService {
         courseEntity.setNumberPlace(numberPlace);
         courseEntity.setCreatedAt(LocalDateTime.now());
 
-        repository.saveAndFlush(courseEntity);
+        courseRepository.saveAndFlush(courseEntity);
         return courseEntity.getId();
     }
 
