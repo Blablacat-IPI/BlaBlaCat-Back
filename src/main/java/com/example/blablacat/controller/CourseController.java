@@ -45,5 +45,15 @@ public class CourseController {
         }
     }
 
+    @GetMapping("pagemax")
+    public Integer pageMax() {
+        return service.numberPageMaxOfCourses();
+    }
+
+    @GetMapping("Page")
+    public List<CourseDto> Page(@RequestParam Integer page) {
+        Integer size = 12;
+        return service.getAllCoursesByPages(page, size);
+    }
 
 }

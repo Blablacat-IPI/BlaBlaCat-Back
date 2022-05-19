@@ -56,5 +56,19 @@ public interface ICourseService {
      */
     List<CourseDto> getAllCoursesByCity(String city);
 
+    /**
+     * Calcul le nombre de page max par 12 course/page
+     * @return Integer du nombre de page
+     */
+    Integer numberPageMaxOfCourses();
+
+    /**
+     * Permet de faire la pagination des courses
+     * @param page la page voulu
+     * @param size nombre d'élement par page ici 12
+     * @return
+     */
+    List<CourseDto> getAllCoursesByPages(Integer page, Integer size);
+
 }
 

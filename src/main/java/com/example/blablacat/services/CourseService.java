@@ -5,6 +5,7 @@ import com.example.blablacat.entity.CourseEntity;
 import com.example.blablacat.repository.CourseRepository;
 import com.example.blablacat.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -84,6 +85,23 @@ public class CourseService implements ICourseService {
             listDto.add(this.toDto(ce));
         }
         return listDto;
+    }
+
+    @Override
+    public Integer numberPageMaxOfCourses() {
+        List<CourseEntity> list = repository.findAll();
+        return list.size() / 12 ;
+    }
+
+    @Override
+    public List<CourseDto> getAllCoursesByPages(Integer page, Integer size) {
+        List<CourseEntity> list = repository.findAll(PageRequest.of(page, size)).getContent();
+        List<CourseDto> listFinal = new ArrayList<>();
+
+        for(CourseEntity entity: list){
+            listFinal.add(this.toDto(entity));
+        }
+        return listFinal;
     }
 
     @Override
