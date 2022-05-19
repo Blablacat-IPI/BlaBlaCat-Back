@@ -26,13 +26,12 @@ public interface CourseRepository extends JpaRepository<CourseEntity, Integer> {
      */
     List<CourseEntity> findAllByDeletedAtNullAndDateAfter(LocalDateTime dateMin);
 
-<<<<<<< HEAD
-=======
+
     /**
      * Renvoie les 5 derniers Courses créés
      * @return List<CourseEntity>
      */
->>>>>>> 14819cf71d5e32ef2bf4e1cedc09740e11ad0ca0
+
     List<CourseEntity> findFirst5ByOrderByCreatedAtDesc();
 
 }
