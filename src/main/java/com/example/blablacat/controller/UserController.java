@@ -76,4 +76,26 @@ public class UserController {
 
     }
 
+    @GetMapping("pageMaxUsersNotValidate")
+    public Integer pageMaxUsersNotValidate() {
+        return service.numberPageMaxOfUsersNotValidate();
+    }
+
+    @GetMapping("pageUsersNotValidate")
+    public List<UserDto> pageUsersNotValidate(@RequestParam Integer page) {
+        Integer size = 10;
+        return service.getAllUsersNotValidateByPages(page, size);
+    }
+
+    @GetMapping("pageMaxUsersValidate")
+    public Integer pageMaxUsersValidate() {
+        return service.numberPageMaxOfUsersValidate();
+    }
+
+    @GetMapping("pageUsersValidate")
+    public List<UserDto> pageUsersValidate(@RequestParam Integer page) {
+        Integer size = 10;
+        return service.getAllUsersValidateByPages(page, size);
+    }
+
 }
