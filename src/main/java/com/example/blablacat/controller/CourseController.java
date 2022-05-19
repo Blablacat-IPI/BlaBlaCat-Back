@@ -15,29 +15,29 @@ import java.util.List;
 public class CourseController {
 
     @Autowired
-    private ICourseService service;
+    private ICourseService courseService;
 
     @GetMapping("all")
-    public List<CourseDto> getAllCourse() { return service.getAllCourse();}
+    public List<CourseDto> getAllCourse() { return courseService.getAllCourse();}
 
     @GetMapping("allValid")
     public List<CourseDto> getAllCoursesValid(){
-        return service.getAllCoursesValid();
+        return courseService.getAllCoursesValid();
     }
 
     @GetMapping("lastFive")
     public List<CourseDto> getLastFiveCourses(){
-        return service.getLastFiveCoursesCreated();
+        return courseService.getLastFiveCoursesCreated();
     }
 
     @GetMapping("searchcity/{city}")
     public List<CourseDto> getSearchCity(@PathVariable String city ) {
-        return service.getAllCoursesByCity(city);
+        return courseService.getAllCoursesByCity(city);
     }
 
     @PostMapping("add")
     public ResponseEntity<Integer> addCourses(@RequestBody CourseDto course_dto) {
-        Integer course_id = service.addCourse(course_dto.getDate(), course_dto.getCityDeparture(), course_dto.getDepartureZipCode(), course_dto.getStreetDeparture(), course_dto.getCityArrival(), course_dto.getArrivalZipCode(),course_dto.getStreetArrival(), course_dto.getNumberPlace());
+        Integer course_id = courseService.addCourse(course_dto.getDate(), course_dto.getCityDeparture(), course_dto.getDepartureZipCode(), course_dto.getStreetDeparture(), course_dto.getCityArrival(), course_dto.getArrivalZipCode(),course_dto.getStreetArrival(), course_dto.getNumberPlace());
         try {
             return new ResponseEntity<>(course_id, HttpStatus.OK);
         } catch (Exception e) {
@@ -45,15 +45,30 @@ public class CourseController {
         }
     }
 
-    @GetMapping("pagemax")
-    public Integer pageMax() {
-        return service.numberPageMaxOfCourses();
+    @GetMapping("pageMaxMyCourses")
+    public Integer pageMaxMyCourses() {
+        //uniquement avec user 10 pour le moment, rajouter le @Request param user id et changer dans service d'angular plus tard
+        return courseService.numberPageMaxCourseByUser();
     }
 
-    @GetMapping("Page")
-    public List<CourseDto> Page(@RequestParam Integer page) {
-        Integer size = 12;
-        return service.getAllCoursesByPages(page, size);
+    @GetMapping("pageMyCourses")
+    public List<CourseDto> pageMyCourses(@RequestParam Integer page){
+        Integer size = 5;
+        //uniquement avec user 10 pour le moment, rajouter le @Request param user id et changer dans service d'angular plus tard
+        return courseService.getAllCoursesByUserPage(page, size);
     }
+
+    @GetMapping("pageMaxAllCourses")
+    public Integer pageMaxAllCourses() {
+        return courseService.numberPageMaxOfCourses();
+    }
+
+    @GetMapping("pageAllCourses")
+    public List<CourseDto> pageAllCourses(@RequestParam Integer page) {
+        Integer size = 12;
+        return courseService.getAllCoursesByPages(page, size);
+    }
+
+
 
 }

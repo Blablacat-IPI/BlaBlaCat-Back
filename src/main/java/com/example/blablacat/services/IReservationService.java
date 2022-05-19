@@ -35,11 +35,17 @@ public interface IReservationService {
     List<ReservationDto> getAllReservations();
 
     /**
-     * Calcule le nombre de pages pour 3 réservations/page (pour le moment)
+     * Calcule le nombre de pages pour 5 réservations/page (pour le moment)
      * @return Integer du nombre de pages
      */
     Integer numberPageMaxReservationByUser();
 
+    /**
+     * Renvoie les Réservations d'un User paginées
+     * @param page
+     * @param size
+     * @return List<ReservationDto>
+     */
     List<ReservationDto> getAllReservationsByUserPage(Integer page, Integer size);
 
     /**
