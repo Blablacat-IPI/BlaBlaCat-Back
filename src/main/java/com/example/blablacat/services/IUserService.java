@@ -71,5 +71,33 @@ public interface IUserService {
      */
     Boolean checkExistById(Integer id);
 
+    /**
+     * Calcule le nombre de page max des Users non validé par l'admin
+     * @return Integer du nombre de page => 10 / pages
+     */
+    Integer numberPageMaxOfUsersNotValidate();
+
+    /**
+     * Calcule le nombre de page max des Users validé
+     * @return Integer du nombre de page => 10 / pages
+     */
+    Integer numberPageMaxOfUsersValidate();
+
+    /**
+     * Permet de faire la pagination des Users non validés
+     * @param page la page voulu
+     * @param size nombre d'élements par page ici 10
+     * @return
+     */
+    List<UserDto> getAllUsersNotValidateByPages(Integer page, Integer size);
+
+    /**
+     * Permet de faire la pagination des Users validés
+     * @param page la page voulu
+     * @param size nombre d'élements par page ici 10
+     * @return
+     */
+    List<UserDto> getAllUsersValidateByPages(Integer page, Integer size);
+
 
 }
