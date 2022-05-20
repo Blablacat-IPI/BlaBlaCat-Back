@@ -11,13 +11,8 @@ public class ReservationDto {
     private LocalDateTime displayDate;
     private String username;
 
-<<<<<<< HEAD
-    public String getUsername() {
-=======
-    private String username;
 
-    public String getUserName() {
->>>>>>> a50457a04ef6bb05e90886f48a9b03191806f7f8
+    public String getUsername() {
         return username;
     }
 
