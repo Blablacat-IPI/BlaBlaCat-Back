@@ -5,8 +5,6 @@ import java.time.LocalDateTime;
 public class ReservationDto {
     private Integer user_id;
     private Integer course_id;
-
-    private Integer numberPlace;
     private String displayName;
     private String displayDepartureAddress;
     private String displayArrivalAddress;
@@ -20,14 +18,6 @@ public class ReservationDto {
 
     public void setUsername(String username) {
         this.username = username;
-    }
-
-    public Integer getNumberPlace() {
-        return numberPlace;
-    }
-
-    public void setNumberPlace(Integer numberPlace) {
-        this.numberPlace = numberPlace;
     }
 
     public LocalDateTime getDisplayDate() {

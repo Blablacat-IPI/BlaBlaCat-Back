@@ -1,6 +1,7 @@
 package com.example.blablacat.services;
 
 import com.example.blablacat.dto.CourseDto;
+import com.example.blablacat.dto.ReservationDto;
 import com.example.blablacat.entity.CourseEntity;
 import com.example.blablacat.entity.UserEntity;
 
@@ -55,6 +56,34 @@ public interface ICourseService {
      * @return List de CourseDto validant les critères de recherche
      */
     List<CourseDto> getAllCoursesByCity(String city);
+
+    /**
+     * Calcul le nombre de page max par 12 course/page
+     * @return Integer du nombre de page
+     */
+    Integer numberPageMaxOfCourses();
+
+    /**
+     * Permet de faire la pagination des courses
+     * @param page la page voulu
+     * @param size nombre d'élement par page ici 12
+     * @return
+     */
+    List<CourseDto> getAllCoursesByPages(Integer page, Integer size);
+
+     /** Calcule le nombre de pages pour 5 Courses/page (pour le moment)
+     * @return Integer du nombre de pages
+     */
+    Integer numberPageMaxCourseByUser();
+
+    /**
+     * Renvoie les Courses créées par un User paginées
+     * @param page
+     * @param size
+     * @return List<ReservationDto>
+     */
+    List<CourseDto> getAllCoursesByUserPage(Integer page, Integer size);
+
 
 }
 

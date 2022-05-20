@@ -3,7 +3,9 @@ package com.example.blablacat.services;
 import com.example.blablacat.dto.UserDto;
 import com.example.blablacat.entity.UserEntity;
 import com.example.blablacat.repository.UserRepository;
+import org.apache.catalina.User;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -109,6 +111,40 @@ public class UserService implements IUserService {
 
     public Boolean checkExistById(Integer id){
         return userRepository.existsById(id);
+    }
+
+    @Override
+    public Integer numberPageMaxOfUsersNotValidate() {
+        List<UserEntity> list = userRepository.findAllByValidateAdminNull();
+        return list.size() / 10 ;
+    }
+
+    @Override
+    public Integer numberPageMaxOfUsersValidate() {
+        List<UserEntity> list = userRepository.findAllByValidateAdminTrueAndDeletedAtNull();
+        return list.size() / 10 ;
+    }
+
+    @Override
+    public List<UserDto> getAllUsersNotValidateByPages(Integer page, Integer size) {
+        List<UserEntity> list = userRepository.findAllByValidateAdminNull(PageRequest.of(page, size)).getContent();
+        List<UserDto> listFinal = new ArrayList<>();
+
+        for(UserEntity entity: list){
+            listFinal.add(this.toDto(entity));
+        }
+        return listFinal;
+    }
+
+    @Override
+    public List<UserDto> getAllUsersValidateByPages(Integer page, Integer size) {
+        List<UserEntity> list = userRepository.findAllByValidateAdminTrueAndDeletedAtNull(PageRequest.of(page, size)).getContent();
+        List<UserDto> listFinal = new ArrayList<>();
+
+        for(UserEntity entity: list){
+            listFinal.add(this.toDto(entity));
+        }
+        return listFinal;
     }
 
 }
