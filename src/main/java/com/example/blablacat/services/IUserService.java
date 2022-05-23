@@ -15,6 +15,19 @@ public interface IUserService {
     UserDto toDto(UserEntity entity);
 
     /**
+     * Récupère un User à partir de son id
+     * @param id
+     * @return UserDto
+     */
+    UserDto getById(Integer id);
+
+    /**
+     * Modifie un User en BDD
+     * @param dto
+     */
+    void updateUser(UserDto dto);
+
+    /**
      * Récupère tous les Users en BDD
      * @return List de UserDto
      */
