@@ -19,6 +19,17 @@ public class UserController {
     @Autowired
     private IUserService service;
 
+    @GetMapping("getById")
+    public UserDto getById(@RequestParam Integer id){return service.getById(id);}
+
+    @PostMapping("updateUser")
+    public void updateUser(@RequestBody UserDto dto){
+        if(service.checkExistById(dto.getId())){
+            System.out.println("Dans le user controller");
+            service.updateUser(dto);
+        }
+    }
+
     @GetMapping("all")
     public List<UserDto> getAll() {
         return service.getAllUsers();
@@ -37,9 +48,8 @@ public class UserController {
     @PostMapping("addUser")
     public ResponseEntity<Integer> addUsers(@RequestBody UserDto udto) {
 
-        Integer id = service.addUser( udto.getUsername(), udto.getIdCompany(), udto.getLastName(), udto.getFirstName(), udto.getPassword(), udto.getEmail());
-
         try {
+            Integer id = service.addUser( udto.getUsername(), udto.getIdCompany(), udto.getLastName(), udto.getFirstName(), udto.getPassword(), udto.getEmail());
             return new ResponseEntity<>(id, HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity(e.getMessage(), HttpStatus.BAD_REQUEST);

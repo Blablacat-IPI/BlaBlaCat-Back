@@ -36,6 +36,23 @@ public class UserService implements IUserService {
     }
 
     @Override
+    public UserDto getById(Integer id) {
+        UserDto dto = this.toDto(userRepository.findById(id).get());
+        return dto;
+    }
+
+    @Override
+    public void updateUser(UserDto dto) {
+        UserEntity entity = userRepository.findById(dto.getId()).get();
+        entity.setUsername(dto.getUsername());
+        entity.setLastName(dto.getLastName());
+        entity.setFirstName(dto.getFirstName());
+        entity.setEmail(dto.getEmail());
+        userRepository.save(entity);
+    }
+
+
+    @Override
     public List<UserDto> getAllUsers() {
 
         List<UserEntity> list = userRepository.findAll();

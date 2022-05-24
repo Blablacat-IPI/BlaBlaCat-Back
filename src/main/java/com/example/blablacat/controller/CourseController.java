@@ -52,6 +52,7 @@ public class CourseController {
     }
 
     @GetMapping("pageMyCourses")
+
     public List<CourseDto> pageMyCourses(@RequestParam Integer page){
         Integer size = 5;
         //uniquement avec user 10 pour le moment, rajouter le @Request param user id et changer dans service d'angular plus tard
