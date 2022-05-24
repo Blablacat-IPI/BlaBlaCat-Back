@@ -12,7 +12,7 @@ public class ReservationDto {
 
     private String username;
 
-    public String getUserName() {
+    public String getUsername() {
         return username;
     }
 
