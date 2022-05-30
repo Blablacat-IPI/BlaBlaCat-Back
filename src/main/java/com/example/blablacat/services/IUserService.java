@@ -23,6 +23,8 @@ public interface IUserService {
 
     boolean checkUsernameUsed(String username);
 
+    boolean checkEmailUsed(String email);
+
     /**
      * Modifie un User en BDD
      * @param dto
