@@ -36,6 +36,8 @@ public interface UserRepository extends JpaRepository<UserEntity, Integer> {
 
     Page<UserEntity> findAllByValidateAdminNull(Pageable pageable);
 
+    boolean existsByUsername(String username);
+
 
 
 

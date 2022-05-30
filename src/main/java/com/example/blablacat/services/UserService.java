@@ -42,6 +42,12 @@ public class UserService implements IUserService {
     }
 
     @Override
+    public boolean checkUsernameUsed(String username) {
+
+        return userRepository.existsByUsername(username);
+    }
+
+    @Override
     public void updateUser(UserDto dto) {
         UserEntity entity = userRepository.findById(dto.getId()).get();
         entity.setUsername(dto.getUsername());
