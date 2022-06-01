@@ -21,6 +21,10 @@ public interface IUserService {
      */
     UserDto getById(Integer id);
 
+    boolean checkUsernameUsed(String username);
+
+    boolean checkEmailUsed(String email);
+
     /**
      * Modifie un User en BDD
      * @param dto

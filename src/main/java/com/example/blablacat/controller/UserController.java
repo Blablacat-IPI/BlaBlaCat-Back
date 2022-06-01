@@ -30,6 +30,28 @@ public class UserController {
         }
     }
 
+    @GetMapping("usernameCheckVacant")
+    public Boolean checkUsernameVacant(@RequestParam String username){
+
+        if(service.checkUsernameUsed(username)){
+            //Username déjà utilisé
+            return false;
+        } else {
+            return true;
+        }
+    }
+
+    @GetMapping("emailCheckVacant")
+    public Boolean checkEmailVacant(@RequestParam String email){
+
+        if(service.checkEmailUsed(email)){
+            //Email déjà utilisé
+            return false;
+        } else {
+            return true;
+        }
+    }
+
     @GetMapping("all")
     public List<UserDto> getAll() {
         return service.getAllUsers();
