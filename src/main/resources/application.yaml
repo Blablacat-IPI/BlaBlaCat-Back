@@ -1,0 +1,19 @@
+spring:
+  datasource:
+    url: "jdbc:sqlserver://poe-ipi-cap.database.windows.net;database=Blablacat"
+    username: "admin-loick"
+    password: "jLrFw439@"
+    driver-class-name: com.microsoft.sqlserver.jdbc.SQLServerDriver
+
+  security:
+    oauth2:
+      client:
+        registration:
+          google:
+            client-id: 1003141166599-klctaq9cljfd9m4k3hdn7t5e2fmfgmbq.apps.googleusercontent.com
+            client-secret: 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
+            scope: openid, profile, email, platform
+      resourceserver:
+        jwt:
+          issuer-uri: https://accounts.google.com/
+          jwk-set-uri: https://www.googleapis.com/oauth2/v3/certs
