@@ -3,7 +3,6 @@ package com.example.blablacat.services;
 import com.example.blablacat.dto.UserDto;
 import com.example.blablacat.entity.UserEntity;
 import com.example.blablacat.repository.UserRepository;
-import org.apache.catalina.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
@@ -133,6 +132,7 @@ public class UserService implements IUserService {
     public Boolean validateUserByAdmin(Integer id){
         UserEntity entity = userRepository.findById(id).get();
         entity.setValidateAdmin(true);
+        entity.setRole("User");
         userRepository.save(entity);
         return true;
     }

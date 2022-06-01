@@ -51,6 +51,9 @@ public class UserEntity {
     @Column(name = "deleted_at")
     private LocalDateTime deletedAt;
 
+    @Column(name = "role")
+    private String role;
+
     @OneToMany
     @JoinColumn(name="user_id", referencedColumnName = "id")
     private List<ReservationEntity> userHasCourseEntityList;
@@ -161,5 +164,13 @@ public class UserEntity {
 
     public void setDeletedAt(LocalDateTime deletedAt) {
         this.deletedAt = deletedAt;
+    }
+
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
     }
 }
