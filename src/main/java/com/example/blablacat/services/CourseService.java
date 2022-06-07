@@ -81,7 +81,29 @@ public class CourseService implements ICourseService {
 
     @Override
     public List<CourseDto> getAllCoursesByCity(String city) {
-        List<CourseEntity> list = courseRepository.findByCityDepartureOrCityArrival(city, city);
+        List<CourseEntity> list = courseRepository.findByCityDepartureLikeOrCityArrivalLike("%"+city+"%", "%"+city+"%");
+        List<CourseDto> listDto = new ArrayList<>();
+
+        for(CourseEntity ce : list) {
+            listDto.add(this.toDto(ce));
+        }
+        return listDto;
+    }
+
+    @Override
+    public List<CourseDto> getAllCoursesByStreet(String street) {
+        List<CourseEntity> list = courseRepository.findByStreetDepartureLikeOrStreetArrivalLike("%"+street+"%", "%"+street+"%");
+        List<CourseDto> listDto = new ArrayList<>();
+
+        for(CourseEntity ce : list) {
+            listDto.add(this.toDto(ce));
+        }
+        return listDto;
+    }
+
+    @Override
+    public List<CourseDto> getAllCoursesByZipcode(String zipcode) {
+        List<CourseEntity> list = courseRepository.getAllCoursesByZipCode(zipcode, zipcode);
         List<CourseDto> listDto = new ArrayList<>();
 
         for(CourseEntity ce : list) {

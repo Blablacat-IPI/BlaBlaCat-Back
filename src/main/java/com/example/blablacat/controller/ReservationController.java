@@ -18,6 +18,7 @@ public class ReservationController {
 
     @PostMapping("add")
     public ResponseEntity add(@RequestBody ReservationDto reservationDto){
+        System.out.println(reservationDto.getUser_id());
         Integer id = reservationService.save(reservationDto);
         return new ResponseEntity(id, HttpStatus.OK);
     };

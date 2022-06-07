@@ -35,6 +35,12 @@ public class CourseController {
         return courseService.getAllCoursesByCity(city);
     }
 
+    @GetMapping("searchstreet/{street}")
+    public List<CourseDto> getSearchStreet(@PathVariable String street) { return courseService.getAllCoursesByStreet(street); }
+
+    @GetMapping("searchzipcode/{zipcode}")
+    public List<CourseDto> getSearchZipcode(@PathVariable String zipcode) { return courseService.getAllCoursesByZipcode(zipcode); }
+
     @PostMapping("add")
     public ResponseEntity<Integer> addCourses(@RequestBody CourseDto course_dto) {
         Integer course_id = courseService.addCourse(course_dto.getDate(), course_dto.getCityDeparture(), course_dto.getDepartureZipCode(), course_dto.getStreetDeparture(), course_dto.getCityArrival(), course_dto.getArrivalZipCode(),course_dto.getStreetArrival(), course_dto.getNumberPlace());
