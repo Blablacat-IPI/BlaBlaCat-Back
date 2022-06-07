@@ -46,17 +46,17 @@ public class CourseController {
     }
 
     @GetMapping("pageMaxMyCourses")
-    public Integer pageMaxMyCourses() {
+    public Integer pageMaxMyCourses(@RequestParam Integer userId) {
         //uniquement avec user 10 pour le moment, rajouter le @Request param user id et changer dans service d'angular plus tard
-        return courseService.numberPageMaxCourseByUser();
+        return courseService.numberPageMaxCourseByUser(userId);
     }
 
     @GetMapping("pageMyCourses")
 
-    public List<CourseDto> pageMyCourses(@RequestParam Integer page){
+    public List<CourseDto> pageMyCourses(@RequestParam Integer page, @RequestParam Integer userId){
         Integer size = 5;
         //uniquement avec user 10 pour le moment, rajouter le @Request param user id et changer dans service d'angular plus tard
-        return courseService.getAllCoursesByUserPage(page, size);
+        return courseService.getAllCoursesByUserPage(page, size, userId);
     }
 
     @GetMapping("pageMaxAllCourses")

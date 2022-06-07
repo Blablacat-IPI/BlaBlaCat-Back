@@ -29,7 +29,7 @@ public class ReservationService implements IReservationService {
     public ReservationDto toDto(ReservationEntity reservationEntity ) {
         ReservationDto userHasCourseDto = new ReservationDto();
         userHasCourseDto.setDisplayName(reservationEntity.getUserEntity().getFirstName() + " " + reservationEntity.getUserEntity().getLastName() );
-        userHasCourseDto.setUsername(reservationEntity.getUserEntity().getUsername());
+        userHasCourseDto.setUsername(reservationEntity.getCourseEntity().getUserEntity().getUsername());
         userHasCourseDto.setDisplayArrivalAddress(reservationEntity.getCourseEntity().getStreetArrival() + ", " + reservationEntity.getCourseEntity().getArrivalZipCode() + " " + reservationEntity.getCourseEntity().getCityArrival());
         userHasCourseDto.setDisplayDepartureAddress(reservationEntity.getCourseEntity().getStreetDeparture() + ", " + reservationEntity.getCourseEntity().getDepartureZipCode() + " " + reservationEntity.getCourseEntity().getCityDeparture());
         userHasCourseDto.setUser_id(reservationEntity.getUserEntity().getId());
@@ -69,18 +69,18 @@ public class ReservationService implements IReservationService {
         }
 
     @Override
-    public Integer numberPageMaxReservationByUser() {
+    public Integer numberPageMaxReservationByUser(Integer userId) {
         //ist<ReservationEntity> list = reservationRepository.findAll();
-        List<ReservationEntity> list = reservationRepository.findAllByUserEntity(userRepository.findById(10).get());
+        List<ReservationEntity> list = reservationRepository.findAllByUserEntity(userRepository.findById(userId).get());
         return list.size() / 5 ;
     }
 
 
     @Override
-    public List<ReservationDto> getAllReservationsByUserPage(Integer page, Integer size) {
+    public List<ReservationDto> getAllReservationsByUserPage(Integer page, Integer size, Integer userId) {
 
         //List<ReservationEntity> list = reservationRepository.findAll(PageRequest.of(page, size)).getContent();
-        UserEntity user = userRepository.findById(10).get();
+        UserEntity user = userRepository.findById(userId).get();
         List<ReservationEntity> list = reservationRepository.findAllByUserEntity(user, PageRequest.of(page, size)).getContent();
 
         List<ReservationDto> listFinal = new ArrayList<>();
