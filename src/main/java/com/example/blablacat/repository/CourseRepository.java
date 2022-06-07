@@ -22,7 +22,12 @@ public interface CourseRepository extends JpaRepository<CourseEntity, Integer> {
      * @param cityArrival
      * @return List<CourseEntity>
      */
-    List<CourseEntity> findByCityDepartureLikeOrCityArrivalLike(@Param ("city")String cityDeparture,@Param ("city") String cityArrival);
+    List<CourseEntity> findByCityDepartureLikeOrCityArrivalLike(@Param("city") String cityDeparture, @Param("city") String cityArrival);
+
+    List<CourseEntity> findByStreetDepartureLikeOrStreetArrivalLike(@Param("street")String streetDeparture,@Param("street") String streetArrival);
+
+    @Query(value = "select * from Courses where departure_zip_code like ?% or arrival_zip_code like ?%", nativeQuery = true)
+    List<CourseEntity> getAllCoursesByZipCode(@Param("zipcode")String zipcodeDeparture,@Param("zipcode") String zipcodeArrival);
 
     /**
      * Renvoie les Courses n'ayant pas été delete et ayant lieu après la date et l'heure actuelle

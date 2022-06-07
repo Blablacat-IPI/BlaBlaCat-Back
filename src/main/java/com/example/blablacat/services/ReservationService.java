@@ -53,7 +53,6 @@ public class ReservationService implements IReservationService {
             CourseEntity courseEntity = courseRepository.findById(dto.getId()).get();
             entity.setCourseEntity(courseEntity);
             entity.setCreatedAt(LocalDateTime.now());
-
             entity = reservationRepository.saveAndFlush(entity);
             return entity.getUser_has_course_id();
         }

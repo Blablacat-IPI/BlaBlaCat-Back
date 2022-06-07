@@ -51,11 +51,25 @@ public interface ICourseService {
     Integer addCourse(LocalDateTime date, String cityDeparture, Integer departureZipCode, String streetDeparture, String cityArrival, Integer arrivalZipCode, String streetArrival, Integer numberPlace);
 
     /**
-     * Récupère en BDD tous les trajets ayant une certain
+     * Récupère en BDD tous les trajets par ville
      * @param city Ville à chercher
      * @return List de CourseDto validant les critères de recherche
      */
     List<CourseDto> getAllCoursesByCity(String city);
+
+    /**
+     * Récupère en BDD tous les trajets par adresse
+     * @param street Adresse a rechercher
+     * @return Liste de CourseDto validant les critères de recherche
+     */
+    List<CourseDto> getAllCoursesByStreet(String street);
+
+    /**
+     * Récupère en BDD tous les trajets par code postal
+     * @param zipcode code postal a renseigner
+     * @return Liste de courseDto validant les critère de recherche
+     */
+    List<CourseDto> getAllCoursesByZipcode(String zipcode);
 
     /**
      * Calcul le nombre de page max par 12 course/page

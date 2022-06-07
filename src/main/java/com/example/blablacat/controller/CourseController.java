@@ -39,8 +39,13 @@ public class CourseController {
         }catch (Exception e){
             return new ResponseEntity(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
-
     }
+
+    @GetMapping("searchstreet/{street}")
+    public List<CourseDto> getSearchStreet(@PathVariable String street) { return courseService.getAllCoursesByStreet(street); }
+
+    @GetMapping("searchzipcode/{zipcode}")
+    public List<CourseDto> getSearchZipcode(@PathVariable String zipcode) { return courseService.getAllCoursesByZipcode(zipcode); }
 
     @PostMapping("add")
     public ResponseEntity<Integer> addCourses(@RequestBody CourseDto course_dto) {
