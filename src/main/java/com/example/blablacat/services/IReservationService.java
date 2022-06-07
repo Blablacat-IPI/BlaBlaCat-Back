@@ -1,5 +1,6 @@
 package com.example.blablacat.services;
 
+import com.example.blablacat.dto.CourseDto;
 import com.example.blablacat.dto.ReservationDto;
 import com.example.blablacat.entity.ReservationEntity;
 
@@ -26,7 +27,7 @@ public interface IReservationService {
      * @param dto ReservationDto de la réservation à ajouter
      * @return Integer de l'id de la réservation
      */
-    Integer save(ReservationDto dto);
+    Integer save(CourseDto courseDto, Integer userId);
 
     /**
      * Récupère toutes les réservations en BDD
