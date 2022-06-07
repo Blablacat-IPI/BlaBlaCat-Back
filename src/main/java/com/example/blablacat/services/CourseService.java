@@ -91,14 +91,14 @@ public class CourseService implements ICourseService {
     }
 
     @Override
-    public Integer numberPageMaxCourseByUser() {
-        List<CourseEntity> list = courseRepository.findAllByUserEntity(userRepository.findById(10).get());
+    public Integer numberPageMaxCourseByUser(Integer userId) {
+        List<CourseEntity> list = courseRepository.findAllByUserEntity(userRepository.findById(userId).get());
         return list.size() / 5 ;
     }
 
     @Override
-    public List<CourseDto> getAllCoursesByUserPage(Integer page, Integer size) {
-        UserEntity user = userRepository.findById(10).get();
+    public List<CourseDto> getAllCoursesByUserPage(Integer page, Integer size, Integer userId) {
+        UserEntity user = userRepository.findById(userId).get();
         List<CourseEntity> list = courseRepository.findAllByUserEntity(user, PageRequest.of(page, size)).getContent();
 
         List<CourseDto> listFinal = new ArrayList<>();

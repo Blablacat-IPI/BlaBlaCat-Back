@@ -74,7 +74,7 @@ public interface ICourseService {
      /** Calcule le nombre de pages pour 5 Courses/page (pour le moment)
      * @return Integer du nombre de pages
      */
-    Integer numberPageMaxCourseByUser();
+    Integer numberPageMaxCourseByUser(Integer userId);
 
     /**
      * Renvoie les Courses créées par un User paginées
@@ -82,7 +82,7 @@ public interface ICourseService {
      * @param size
      * @return List<ReservationDto>
      */
-    List<CourseDto> getAllCoursesByUserPage(Integer page, Integer size);
+    List<CourseDto> getAllCoursesByUserPage(Integer page, Integer size, Integer userId);
 
 
 }
