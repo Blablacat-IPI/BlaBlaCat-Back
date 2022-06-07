@@ -5,7 +5,7 @@ import com.example.blablacat.entity.UserEntity;
 import java.time.LocalDateTime;
 
 public class CourseDto {
-
+    private Integer id;
     private String driverUsername;
     private LocalDateTime date;
 
@@ -23,6 +23,14 @@ public class CourseDto {
 
     public String getDriverUsername() {
         return driverUsername;
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
     }
 
     public void setDriverUsername(String driverUsername) {
