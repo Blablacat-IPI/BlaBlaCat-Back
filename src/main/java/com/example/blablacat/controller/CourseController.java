@@ -31,8 +31,15 @@ public class CourseController {
     }
 
     @GetMapping("searchcity/{city}")
-    public List<CourseDto> getSearchCity(@PathVariable String city ) {
-        return courseService.getAllCoursesByCity(city);
+    public ResponseEntity<List<CourseDto>> getSearchCity(@PathVariable String city ) {
+        System.out.println(city);
+        try {
+            return new ResponseEntity(courseService.getAllCoursesByCity(city), HttpStatus.OK);
+            //return courseService.getAllCoursesByCity(city);
+        }catch (Exception e){
+            return new ResponseEntity(e.getMessage(), HttpStatus.BAD_REQUEST);
+        }
+
     }
 
     @PostMapping("add")

@@ -82,7 +82,9 @@ public class CourseService implements ICourseService {
 
     @Override
     public List<CourseDto> getAllCoursesByCity(String city) {
-        List<CourseEntity> list = courseRepository.findByCityDepartureOrCityArrival(city, city);
+        System.out.println("dans service");
+        //List<CourseEntity> list = courseRepository.findByCityDepartureLikeOrCityArrivalLike(city, city);
+        List<CourseEntity> list = courseRepository.findByCityDepartureLikeOrCityArrivalLike('%'+city+'%', '%'+city+'%');
         List<CourseDto> listDto = new ArrayList<>();
 
         for(CourseEntity ce : list) {
