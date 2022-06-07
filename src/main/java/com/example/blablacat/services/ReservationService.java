@@ -1,5 +1,6 @@
 package com.example.blablacat.services;
 
+import com.example.blablacat.dto.CourseDto;
 import com.example.blablacat.dto.ReservationDto;
 import com.example.blablacat.entity.CourseEntity;
 import com.example.blablacat.entity.UserEntity;
@@ -45,11 +46,11 @@ public class ReservationService implements IReservationService {
 
 
     @Override
-    public  Integer save(ReservationDto dto) {
+    public  Integer save(CourseDto dto, Integer userId) {
             ReservationEntity entity = new ReservationEntity();
-            UserEntity userEntity = userRepository.findById(dto.getUser_id()).get();
+            UserEntity userEntity = userRepository.findById(userId).get();
             entity.setUserEntity(userEntity);
-            CourseEntity courseEntity = courseRepository.findById(dto.getCourse_id()).get();
+            CourseEntity courseEntity = courseRepository.findById(dto.getId()).get();
             entity.setCourseEntity(courseEntity);
             entity.setCreatedAt(LocalDateTime.now());
             entity = reservationRepository.saveAndFlush(entity);

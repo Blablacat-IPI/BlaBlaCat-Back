@@ -1,5 +1,7 @@
 package com.example.blablacat.controller;
 
+import com.example.blablacat.dto.CourseDto;
+import com.example.blablacat.dto.NewReservationDto;
 import com.example.blablacat.dto.ReservationDto;
 import com.example.blablacat.services.IReservationService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,10 +19,15 @@ public class ReservationController {
     private IReservationService reservationService;
 
     @PostMapping("add")
-    public ResponseEntity add(@RequestBody ReservationDto reservationDto){
-        System.out.println(reservationDto.getUser_id());
-        Integer id = reservationService.save(reservationDto);
-        return new ResponseEntity(id, HttpStatus.OK);
+    public ResponseEntity add(@RequestBody NewReservationDto newReservationDto){
+        
+        try {
+            Integer id = reservationService.save(newReservationDto.getCourse(), newReservationDto.getUserId());
+            return new ResponseEntity(id, HttpStatus.OK);
+        } catch (Exception e){
+            return new ResponseEntity(e.getMessage(), HttpStatus.BAD_REQUEST);
+        }
+
     };
 
     @GetMapping("get/{id}")
