@@ -41,6 +41,17 @@ public class UserController {
         }
     }
 
+    @GetMapping("companyIdCheckVacant")
+    public Boolean checkCompanyIdVacant(@RequestParam String companyId){
+
+        if(service.checkCompanyIdUsed(companyId)){
+            //companyId déjà utilisé
+            return false;
+        } else {
+            return true;
+        }
+    }
+
     @GetMapping("emailCheckVacant")
     public Boolean checkEmailVacant(@RequestParam String email){
 

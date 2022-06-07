@@ -23,6 +23,9 @@ public interface IUserService {
 
     boolean checkUsernameUsed(String username);
 
+    boolean checkCompanyIdUsed(String companyId);
+
+
     boolean checkEmailUsed(String email);
 
     /**

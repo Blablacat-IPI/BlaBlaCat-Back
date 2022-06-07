@@ -47,6 +47,11 @@ public class UserService implements IUserService {
     }
 
     @Override
+    public boolean checkCompanyIdUsed(String companyId) {
+        return userRepository.existsByIdCompany(companyId);
+    }
+
+    @Override
     public boolean checkEmailUsed(String email) {
         return userRepository.existsByEmail(email);
     }
