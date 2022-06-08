@@ -150,10 +150,10 @@ public class CourseService implements ICourseService {
     }
 
     @Override
-    public Integer addCourse(LocalDateTime date, String cityDeparture, Integer departureZipCode, String streetDeparture, String cityArrival, Integer arrivalZipCode, String streetArrival, Integer numberPlace) {
+    public Integer addCourse(Integer userId, LocalDateTime date, String cityDeparture, Integer departureZipCode, String streetDeparture, String cityArrival, Integer arrivalZipCode, String streetArrival, Integer numberPlace) {
         CourseEntity courseEntity = new CourseEntity();
         courseEntity.setDate(date);
-        courseEntity.setUserEntity(userRepository.findById(10).get());
+        courseEntity.setUserEntity(userRepository.findById(userId).get());
         courseEntity.setCityDeparture(cityDeparture);
         courseEntity.setDepartureZipCode(departureZipCode);
         courseEntity.setStreetDeparture(streetDeparture);

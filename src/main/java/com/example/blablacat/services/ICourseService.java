@@ -48,7 +48,7 @@ public interface ICourseService {
      * @param numberPlace Nombre de places disponibles
      * @return l'Id de la course en BDD
      */
-    Integer addCourse(LocalDateTime date, String cityDeparture, Integer departureZipCode, String streetDeparture, String cityArrival, Integer arrivalZipCode, String streetArrival, Integer numberPlace);
+    Integer addCourse(Integer userId, LocalDateTime date, String cityDeparture, Integer departureZipCode, String streetDeparture, String cityArrival, Integer arrivalZipCode, String streetArrival, Integer numberPlace);
 
     /**
      * Récupère en BDD tous les trajets par ville
