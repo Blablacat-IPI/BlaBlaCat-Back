@@ -33,6 +33,13 @@ public class ReservationEntity {
     @Column(name = "deleted_at")
     private LocalDateTime deletedAt;
 
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
 
     public LocalDateTime getCreatedAt() {
         return createdAt;

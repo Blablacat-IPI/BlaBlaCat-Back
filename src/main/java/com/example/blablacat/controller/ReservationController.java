@@ -45,6 +45,13 @@ public class ReservationController {
       return reservationService.getAllReservations();
     }
 
+    @DeleteMapping("delete/{courseId}/{userId}")
+    public void delete(@PathVariable("courseId") Integer courseId, @PathVariable("userId") Integer userId){
+        System.out.println("Dnas controller");
+        this.reservationService.deleteReservation(courseId, userId);
+
+    }
+
     @GetMapping("pagemax")
     public Integer pageMax(@RequestParam Integer userId) {
         return reservationService.numberPageMaxReservationByUser(userId);
