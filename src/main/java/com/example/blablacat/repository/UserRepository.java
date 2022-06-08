@@ -13,14 +13,6 @@ import java.util.Optional;
 public interface UserRepository extends JpaRepository<UserEntity, Integer> {
 
     /**
-     * Récupère un User à partir de son username
-     * @param username
-     * @return l'user
-     */
-    Optional<UserEntity> findByUsername(String username);
-    //A Supprimer ?
-
-    /**
      * Récupère les Users avec validate_by_admin = true + deleted_at = null
      * @return List de UserEntity
      */
