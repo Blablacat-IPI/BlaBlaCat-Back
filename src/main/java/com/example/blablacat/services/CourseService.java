@@ -1,9 +1,8 @@
 package com.example.blablacat.services;
 
 import com.example.blablacat.dto.CourseDto;
-import com.example.blablacat.dto.ReservationDto;
+import com.example.blablacat.dto.CoursePermanentDto;
 import com.example.blablacat.entity.CourseEntity;
-import com.example.blablacat.entity.ReservationEntity;
 import com.example.blablacat.entity.UserEntity;
 import com.example.blablacat.repository.CourseRepository;
 import com.example.blablacat.repository.UserRepository;
@@ -11,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -82,7 +82,29 @@ public class CourseService implements ICourseService {
 
     @Override
     public List<CourseDto> getAllCoursesByCity(String city) {
-        List<CourseEntity> list = courseRepository.findByCityDepartureOrCityArrival(city, city);
+        List<CourseEntity> list = courseRepository.findByCityDepartureLikeOrCityArrivalLike("%"+city+"%", "%"+city+"%");
+        List<CourseDto> listDto = new ArrayList<>();
+
+        for(CourseEntity ce : list) {
+            listDto.add(this.toDto(ce));
+        }
+        return listDto;
+    }
+
+    @Override
+    public List<CourseDto> getAllCoursesByStreet(String street) {
+        List<CourseEntity> list = courseRepository.findByStreetDepartureLikeOrStreetArrivalLike("%"+street+"%", "%"+street+"%");
+        List<CourseDto> listDto = new ArrayList<>();
+
+        for(CourseEntity ce : list) {
+            listDto.add(this.toDto(ce));
+        }
+        return listDto;
+    }
+
+    @Override
+    public List<CourseDto> getAllCoursesByZipcode(String zipcode) {
+        List<CourseEntity> list = courseRepository.getAllCoursesByZipCode(zipcode, zipcode);
         List<CourseDto> listDto = new ArrayList<>();
 
         for(CourseEntity ce : list) {
@@ -111,6 +133,47 @@ public class CourseService implements ICourseService {
     }
 
     @Override
+    public void addPermanentCourses(CoursePermanentDto cpDto) {
+        List<Integer> jours = new ArrayList<>();//liste des valeurs numériques des jours permanents sélectionnés
+
+        if(cpDto.getMonday())
+            jours.add(1);
+        if(cpDto.getTuesday())
+            jours.add(2);
+        if(cpDto.getWednesday())
+            jours.add(3);
+        if(cpDto.getThursday())
+            jours.add(4);
+        if(cpDto.getFriday())
+            jours.add(5);
+
+        List<CourseEntity> allCourses = new ArrayList<>();
+
+        for (LocalDate date = cpDto.getDateDebut(); date.isBefore(cpDto.getDateFin().plusDays(1)); date = date.plusDays(1)){
+
+            for(int i : jours){
+                if(i == date.getDayOfWeek().getValue()){
+                    CourseEntity entity = new CourseEntity();
+
+                    entity.setUserEntity(userRepository.findById(cpDto.getId()).get());
+                    entity.setCityDeparture(cpDto.getCityDeparture());
+                    entity.setStreetDeparture(cpDto.getStreetDeparture());
+                    entity.setDepartureZipCode(cpDto.getDepartureZipCode());
+                    entity.setCityArrival(cpDto.getCityArrival());
+                    entity.setStreetArrival(cpDto.getStreetArrival());
+                    entity.setArrivalZipCode(cpDto.getArrivalZipCode());
+                    entity.setNumberPlace(cpDto.getNumberPlace());
+                    entity.setCreatedAt(LocalDateTime.now());
+
+                    entity.setDate(LocalDateTime.of(date,cpDto.getTime()));
+                    allCourses.add(entity);
+                }
+            }
+        }
+        this.courseRepository.saveAllAndFlush(allCourses);
+    }
+
+    @Override
     public Integer numberPageMaxOfCourses() {
         List<CourseEntity> list = courseRepository.findAll();
         return list.size() / 12 ;
@@ -128,10 +191,10 @@ public class CourseService implements ICourseService {
     }
 
     @Override
-    public Integer addCourse(LocalDateTime date, String cityDeparture, Integer departureZipCode, String streetDeparture, String cityArrival, Integer arrivalZipCode, String streetArrival, Integer numberPlace) {
+    public Integer addCourse(Integer userId, LocalDateTime date, String cityDeparture, Integer departureZipCode, String streetDeparture, String cityArrival, Integer arrivalZipCode, String streetArrival, Integer numberPlace) {
         CourseEntity courseEntity = new CourseEntity();
         courseEntity.setDate(date);
-        courseEntity.setUserEntity(userRepository.findById(10).get());
+        courseEntity.setUserEntity(userRepository.findById(userId).get());
         courseEntity.setCityDeparture(cityDeparture);
         courseEntity.setDepartureZipCode(departureZipCode);
         courseEntity.setStreetDeparture(streetDeparture);

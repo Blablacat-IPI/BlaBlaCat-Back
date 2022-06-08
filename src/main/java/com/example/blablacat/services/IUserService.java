@@ -21,8 +21,25 @@ public interface IUserService {
      */
     UserDto getById(Integer id);
 
+    /**
+     * Vérifie si l'username de l'utilisateur est déjà utilisé dans la BDD
+     * @param username
+     * @return boolean
+     */
     boolean checkUsernameUsed(String username);
 
+    /**
+     * Vérifie si l'id company de l'utilisateur est déjà utilisé dans la BDD
+     * @param companyId
+     * @return boolean
+     */
+    boolean checkCompanyIdUsed(String companyId);
+
+    /**
+     * Vérifie si l'emailde l'utilisateur est déjà utilisé dans la BDD
+     * @param email
+     * @return boolean
+     */
     boolean checkEmailUsed(String email);
 
     /**

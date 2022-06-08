@@ -1,6 +1,5 @@
 package com.example.blablacat.controller;
 
-import com.example.blablacat.dto.TokenDto;
 import com.example.blablacat.dto.UserCookieDto;
 import com.example.blablacat.services.IAuthentificationService;
 import org.springframework.beans.factory.annotation.Autowired;

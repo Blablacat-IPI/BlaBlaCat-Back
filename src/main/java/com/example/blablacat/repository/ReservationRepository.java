@@ -14,7 +14,19 @@ import java.util.Optional;
 @Repository
 public interface ReservationRepository extends JpaRepository<ReservationEntity, Integer> {
 
+    /**
+     * Permet d'obtenir une liste de toutes les courses réservé par un user
+     * @param entity
+     * @return list
+     */
     List<ReservationEntity> findAllByUserEntity(UserEntity entity);
+
+    /**
+     * Permet la pagination des courses réservé par un user
+     * @param entity
+     * @param pageable
+     * @return
+     */
     Page<ReservationEntity> findAllByUserEntity(UserEntity entity, Pageable pageable);
 
 }

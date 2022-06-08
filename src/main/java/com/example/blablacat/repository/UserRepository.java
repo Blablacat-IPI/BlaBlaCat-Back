@@ -12,13 +12,6 @@ import java.util.Optional;
 @Repository
 public interface UserRepository extends JpaRepository<UserEntity, Integer> {
 
-    /**
-     * Récupère un User à partir de son username
-     * @param username
-     * @return l'user
-     */
-    Optional<UserEntity> findByUsername(String username);
-    //A Supprimer ?
 
     /**
      * Récupère les Users avec validate_by_admin = true + deleted_at = null
@@ -37,6 +30,8 @@ public interface UserRepository extends JpaRepository<UserEntity, Integer> {
     Page<UserEntity> findAllByValidateAdminNull(Pageable pageable);
 
     boolean existsByUsername(String username);
+
+    boolean existsByIdCompany(String companyId);
 
     boolean existsByEmail(String email);
 

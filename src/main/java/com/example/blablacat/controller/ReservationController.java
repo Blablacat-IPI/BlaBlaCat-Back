@@ -20,7 +20,7 @@ public class ReservationController {
 
     @PostMapping("add")
     public ResponseEntity add(@RequestBody NewReservationDto newReservationDto){
-        
+
         try {
             Integer id = reservationService.save(newReservationDto.getCourse(), newReservationDto.getUserId());
             return new ResponseEntity(id, HttpStatus.OK);

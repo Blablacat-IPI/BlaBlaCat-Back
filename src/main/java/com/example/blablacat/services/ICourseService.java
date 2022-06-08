@@ -1,6 +1,7 @@
 package com.example.blablacat.services;
 
 import com.example.blablacat.dto.CourseDto;
+import com.example.blablacat.dto.CoursePermanentDto;
 import com.example.blablacat.dto.ReservationDto;
 import com.example.blablacat.entity.CourseEntity;
 import com.example.blablacat.entity.UserEntity;
@@ -48,14 +49,28 @@ public interface ICourseService {
      * @param numberPlace Nombre de places disponibles
      * @return l'Id de la course en BDD
      */
-    Integer addCourse(LocalDateTime date, String cityDeparture, Integer departureZipCode, String streetDeparture, String cityArrival, Integer arrivalZipCode, String streetArrival, Integer numberPlace);
+    Integer addCourse(Integer userId, LocalDateTime date, String cityDeparture, Integer departureZipCode, String streetDeparture, String cityArrival, Integer arrivalZipCode, String streetArrival, Integer numberPlace);
 
     /**
-     * Récupère en BDD tous les trajets ayant une certain
+     * Récupère en BDD tous les trajets par ville
      * @param city Ville à chercher
      * @return List de CourseDto validant les critères de recherche
      */
     List<CourseDto> getAllCoursesByCity(String city);
+
+    /**
+     * Récupère en BDD tous les trajets par adresse
+     * @param street Adresse a rechercher
+     * @return Liste de CourseDto validant les critères de recherche
+     */
+    List<CourseDto> getAllCoursesByStreet(String street);
+
+    /**
+     * Récupère en BDD tous les trajets par code postal
+     * @param zipcode code postal a renseigner
+     * @return Liste de courseDto validant les critère de recherche
+     */
+    List<CourseDto> getAllCoursesByZipcode(String zipcode);
 
     /**
      * Calcul le nombre de page max par 12 course/page
@@ -84,6 +99,10 @@ public interface ICourseService {
      */
     List<CourseDto> getAllCoursesByUserPage(Integer page, Integer size, Integer userId);
 
-
+    /**
+     * Créée en BDD les trajets permanents
+     * @param cpDto Course a créée avec date de début et de fin
+     */
+    void addPermanentCourses(CoursePermanentDto cpDto);
 }
 

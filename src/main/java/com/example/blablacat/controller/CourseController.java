@@ -1,6 +1,7 @@
 package com.example.blablacat.controller;
 
 import com.example.blablacat.dto.CourseDto;
+import com.example.blablacat.dto.CoursePermanentDto;
 import com.example.blablacat.services.ICourseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -31,17 +32,39 @@ public class CourseController {
     }
 
     @GetMapping("searchcity/{city}")
-    public List<CourseDto> getSearchCity(@PathVariable String city ) {
-        return courseService.getAllCoursesByCity(city);
+    public ResponseEntity<List<CourseDto>> getSearchCity(@PathVariable String city ) {
+        System.out.println(city);
+        try {
+            return new ResponseEntity(courseService.getAllCoursesByCity(city), HttpStatus.OK);
+            //return courseService.getAllCoursesByCity(city);
+        }catch (Exception e){
+            return new ResponseEntity(e.getMessage(), HttpStatus.BAD_REQUEST);
+        }
     }
+
+    @GetMapping("searchstreet/{street}")
+    public List<CourseDto> getSearchStreet(@PathVariable String street) { return courseService.getAllCoursesByStreet(street); }
+
+    @GetMapping("searchzipcode/{zipcode}")
+    public List<CourseDto> getSearchZipcode(@PathVariable String zipcode) { return courseService.getAllCoursesByZipcode(zipcode); }
 
     @PostMapping("add")
     public ResponseEntity<Integer> addCourses(@RequestBody CourseDto course_dto) {
-        Integer course_id = courseService.addCourse(course_dto.getDate(), course_dto.getCityDeparture(), course_dto.getDepartureZipCode(), course_dto.getStreetDeparture(), course_dto.getCityArrival(), course_dto.getArrivalZipCode(),course_dto.getStreetArrival(), course_dto.getNumberPlace());
+        Integer course_id = courseService.addCourse(course_dto.getId(), course_dto.getDate(), course_dto.getCityDeparture(), course_dto.getDepartureZipCode(), course_dto.getStreetDeparture(), course_dto.getCityArrival(), course_dto.getArrivalZipCode(),course_dto.getStreetArrival(), course_dto.getNumberPlace());
         try {
             return new ResponseEntity<>(course_id, HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity("Impossible d'ajouter un utilisateur à la course", HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @PostMapping("addPermanent")
+    public ResponseEntity<Boolean> addPermanentCourses(@RequestBody CoursePermanentDto cpDto){
+        try {
+            this.courseService.addPermanentCourses(cpDto);
+            return new ResponseEntity<>(true, HttpStatus.OK);
+        } catch (Exception e){
+            return new ResponseEntity(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
     }
 
