@@ -1,6 +1,7 @@
 package com.example.blablacat.controller;
 
 import com.example.blablacat.dto.CourseDto;
+import com.example.blablacat.dto.CoursePermanentDto;
 import com.example.blablacat.services.ICourseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -54,6 +55,16 @@ public class CourseController {
             return new ResponseEntity<>(course_id, HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity("Impossible d'ajouter un utilisateur à la course", HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @PostMapping("addPermanent")
+    public ResponseEntity<Boolean> addPermanentCourses(@RequestBody CoursePermanentDto cpDto){
+        try {
+            this.courseService.addPermanentCourses(cpDto);
+            return new ResponseEntity<>(true, HttpStatus.OK);
+        } catch (Exception e){
+            return new ResponseEntity(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
     }
 

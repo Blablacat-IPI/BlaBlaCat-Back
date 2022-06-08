@@ -1,6 +1,7 @@
 package com.example.blablacat.services;
 
 import com.example.blablacat.dto.CourseDto;
+import com.example.blablacat.dto.CoursePermanentDto;
 import com.example.blablacat.entity.CourseEntity;
 import com.example.blablacat.entity.UserEntity;
 import com.example.blablacat.repository.CourseRepository;
@@ -9,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -128,6 +130,47 @@ public class CourseService implements ICourseService {
             listFinal.add(this.toDto(entity));
         }
         return listFinal;
+    }
+
+    @Override
+    public void addPermanentCourses(CoursePermanentDto cpDto) {
+        List<Integer> jours = new ArrayList<>();//liste des valeurs numériques des jours permanents sélectionnés
+
+        if(cpDto.getMonday())
+            jours.add(1);
+        if(cpDto.getTuesday())
+            jours.add(2);
+        if(cpDto.getWednesday())
+            jours.add(3);
+        if(cpDto.getThursday())
+            jours.add(4);
+        if(cpDto.getFriday())
+            jours.add(5);
+
+        List<CourseEntity> allCourses = new ArrayList<>();
+
+        for (LocalDate date = cpDto.getDateDebut(); date.isBefore(cpDto.getDateFin().plusDays(1)); date = date.plusDays(1)){
+
+            for(int i : jours){
+                if(i == date.getDayOfWeek().getValue()){
+                    CourseEntity entity = new CourseEntity();
+
+                    entity.setUserEntity(userRepository.findById(cpDto.getId()).get());
+                    entity.setCityDeparture(cpDto.getCityDeparture());
+                    entity.setStreetDeparture(cpDto.getStreetDeparture());
+                    entity.setDepartureZipCode(cpDto.getDepartureZipCode());
+                    entity.setCityArrival(cpDto.getCityArrival());
+                    entity.setStreetArrival(cpDto.getStreetArrival());
+                    entity.setArrivalZipCode(cpDto.getArrivalZipCode());
+                    entity.setNumberPlace(cpDto.getNumberPlace());
+                    entity.setCreatedAt(LocalDateTime.now());
+
+                    entity.setDate(LocalDateTime.of(date,cpDto.getTime()));
+                    allCourses.add(entity);
+                }
+            }
+        }
+        this.courseRepository.saveAllAndFlush(allCourses);
     }
 
     @Override

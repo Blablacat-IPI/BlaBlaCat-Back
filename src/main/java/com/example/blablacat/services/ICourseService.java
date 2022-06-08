@@ -1,6 +1,7 @@
 package com.example.blablacat.services;
 
 import com.example.blablacat.dto.CourseDto;
+import com.example.blablacat.dto.CoursePermanentDto;
 import com.example.blablacat.dto.ReservationDto;
 import com.example.blablacat.entity.CourseEntity;
 import com.example.blablacat.entity.UserEntity;
@@ -98,6 +99,10 @@ public interface ICourseService {
      */
     List<CourseDto> getAllCoursesByUserPage(Integer page, Integer size, Integer userId);
 
-
+    /**
+     * Créée en BDD les trajets permanents
+     * @param cpDto Course a créée avec date de début et de fin
+     */
+    void addPermanentCourses(CoursePermanentDto cpDto);
 }
 
