@@ -12,6 +12,7 @@ import java.util.Optional;
 @Repository
 public interface UserRepository extends JpaRepository<UserEntity, Integer> {
 
+
     /**
      * Récupère les Users avec validate_by_admin = true + deleted_at = null
      * @return List de UserEntity

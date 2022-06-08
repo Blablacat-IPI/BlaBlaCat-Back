@@ -24,8 +24,9 @@ public interface IReservationService {
 
     /**
      * Rajoutes une réservation en BDD
-     * @param dto ReservationDto de la réservation à ajouter
-     * @return Integer de l'id de la réservation
+     * @param courseDto les infos de la course auquel l'user réserve
+     * @param userId de l'user qui crée la course
+     * @return L'id de la réservation
      */
     Integer save(CourseDto courseDto, Integer userId);
 
