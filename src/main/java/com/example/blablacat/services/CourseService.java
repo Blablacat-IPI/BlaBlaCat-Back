@@ -3,8 +3,10 @@ package com.example.blablacat.services;
 import com.example.blablacat.dto.CourseDto;
 import com.example.blablacat.dto.CoursePermanentDto;
 import com.example.blablacat.entity.CourseEntity;
+import com.example.blablacat.entity.ReservationEntity;
 import com.example.blablacat.entity.UserEntity;
 import com.example.blablacat.repository.CourseRepository;
+import com.example.blablacat.repository.ReservationRepository;
 import com.example.blablacat.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
@@ -23,6 +25,10 @@ public class CourseService implements ICourseService {
 
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private ReservationRepository reservationRepository;
+
     @Override
     public CourseDto toDto(CourseEntity entity) {
         CourseDto cdto = new CourseDto();
@@ -82,7 +88,7 @@ public class CourseService implements ICourseService {
 
     @Override
     public List<CourseDto> getAllCoursesByCity(String city) {
-        List<CourseEntity> list = courseRepository.findByCityDepartureLikeOrCityArrivalLike("%"+city+"%", "%"+city+"%");
+        List<CourseEntity> list = courseRepository.findByCityDepartureLikeOrCityArrivalLikeAndDeletedAtNullAndDateAfter("%"+city+"%", "%"+city+"%", LocalDateTime.now());
         List<CourseDto> listDto = new ArrayList<>();
 
         for(CourseEntity ce : list) {
@@ -93,7 +99,7 @@ public class CourseService implements ICourseService {
 
     @Override
     public List<CourseDto> getAllCoursesByStreet(String street) {
-        List<CourseEntity> list = courseRepository.findByStreetDepartureLikeOrStreetArrivalLike("%"+street+"%", "%"+street+"%");
+        List<CourseEntity> list = courseRepository.findByStreetDepartureLikeOrStreetArrivalLikeAndDeletedAtNullAndDateAfter("%"+street+"%", "%"+street+"%", LocalDateTime.now());
         List<CourseDto> listDto = new ArrayList<>();
 
         for(CourseEntity ce : list) {
@@ -104,7 +110,7 @@ public class CourseService implements ICourseService {
 
     @Override
     public List<CourseDto> getAllCoursesByZipcode(String zipcode) {
-        List<CourseEntity> list = courseRepository.getAllCoursesByZipCode(zipcode, zipcode);
+        List<CourseEntity> list = courseRepository.getAllCoursesByZipCode(zipcode, zipcode, LocalDateTime.now());
         List<CourseDto> listDto = new ArrayList<>();
 
         for(CourseEntity ce : list) {
@@ -115,14 +121,14 @@ public class CourseService implements ICourseService {
 
     @Override
     public Integer numberPageMaxCourseByUser(Integer userId) {
-        List<CourseEntity> list = courseRepository.findAllByUserEntity(userRepository.findById(userId).get());
+        List<CourseEntity> list = courseRepository.findAllByUserEntityAndDeletedAtNullAndDateAfter(userRepository.findById(userId).get(),LocalDateTime.now());
         return list.size() / 5 ;
     }
 
     @Override
     public List<CourseDto> getAllCoursesByUserPage(Integer page, Integer size, Integer userId) {
         UserEntity user = userRepository.findById(userId).get();
-        List<CourseEntity> list = courseRepository.findAllByUserEntity(user, PageRequest.of(page, size)).getContent();
+        List<CourseEntity> list = courseRepository.findAllByUserEntityAndDeletedAtNullAndDateAfter(user, PageRequest.of(page, size),LocalDateTime.now()).getContent();
 
         List<CourseDto> listFinal = new ArrayList<>();
 
@@ -174,14 +180,35 @@ public class CourseService implements ICourseService {
     }
 
     @Override
+    public void deleteCourse(Integer courseId) {
+        CourseEntity courseEntity = this.courseRepository.findById(courseId).get();
+        System.out.println(courseEntity.getUserEntity().getUsername());
+
+        //déplacer dans reservationService ?
+        List<ReservationEntity> listReservations = this.reservationRepository.findAllByCourseEntity(courseEntity);
+        System.out.println("taille liste " + listReservations.size());
+        for (ReservationEntity resEntity: listReservations){
+            resEntity.setDeletedAt(LocalDateTime.now());
+        }
+
+        if(listReservations.size() > 0)
+            this.reservationRepository.saveAllAndFlush(listReservations);
+
+        System.out.print("avant soft delete course");
+
+        courseEntity.setDeletedAt(LocalDateTime.now());
+        this.courseRepository.saveAndFlush(courseEntity);
+    }
+
+    @Override
     public Integer numberPageMaxOfCourses() {
-        List<CourseEntity> list = courseRepository.findAll();
+        List<CourseEntity> list = courseRepository.findAllByDeletedAtNullAndDateAfter(LocalDateTime.now());
         return list.size() / 12 ;
     }
 
     @Override
     public List<CourseDto> getAllCoursesByPages(Integer page, Integer size) {
-        List<CourseEntity> list = courseRepository.findAll(PageRequest.of(page, size)).getContent();
+        List<CourseEntity> list = courseRepository.findAllByDeletedAtNullAndDateAfter(PageRequest.of(page, size),LocalDateTime.now()).getContent();
         List<CourseDto> listFinal = new ArrayList<>();
 
         for(CourseEntity entity: list){

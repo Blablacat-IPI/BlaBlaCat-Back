@@ -104,5 +104,11 @@ public interface ICourseService {
      * @param cpDto Course a créée avec date de début et de fin
      */
     void addPermanentCourses(CoursePermanentDto cpDto);
+
+    /**
+     * Suppression douce d'un trajet en BDD
+     * @param courseId course à supprimer
+     */
+    void deleteCourse(Integer courseId);
 }
 

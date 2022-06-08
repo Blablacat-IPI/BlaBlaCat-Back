@@ -21,7 +21,7 @@ public interface CourseRepository extends JpaRepository<CourseEntity, Integer> {
      * @param cityArrival
      * @return List<CourseEntity>
      */
-    List<CourseEntity> findByCityDepartureLikeOrCityArrivalLike(@Param("city") String cityDeparture, @Param("city") String cityArrival);
+    List<CourseEntity> findByCityDepartureLikeOrCityArrivalLikeAndDeletedAtNullAndDateAfter(@Param("city") String cityDeparture, @Param("city") String cityArrival, @Param("date") LocalDateTime dateMin);
 
     /**
      * Renvoie les courses dont les noms d'adresse' correspondent au filtre street voulu
@@ -29,7 +29,7 @@ public interface CourseRepository extends JpaRepository<CourseEntity, Integer> {
      * @param streetArrival
      * @return List<CourseEntity>
      */
-    List<CourseEntity> findByStreetDepartureLikeOrStreetArrivalLike(@Param("street")String streetDeparture,@Param("street") String streetArrival);
+    List<CourseEntity> findByStreetDepartureLikeOrStreetArrivalLikeAndDeletedAtNullAndDateAfter(@Param("street")String streetDeparture,@Param("street") String streetArrival, @Param("date") LocalDateTime dateMin);
 
     /**
      * Renvoie les courses dont le code postal correspond au filtre zipcode voulu
@@ -37,8 +37,8 @@ public interface CourseRepository extends JpaRepository<CourseEntity, Integer> {
      * @param zipcodeArrival
      * @return List<CourseEntity>
      */
-    @Query(value = "select * from Courses where departure_zip_code like ?% or arrival_zip_code like ?%", nativeQuery = true)
-    List<CourseEntity> getAllCoursesByZipCode(@Param("zipcode")String zipcodeDeparture,@Param("zipcode") String zipcodeArrival);
+    @Query(value = "select * from Courses where (departure_zip_code like ?% or arrival_zip_code like ?%) and deleted_at IS NULL and date >= ?", nativeQuery = true)
+    List<CourseEntity> getAllCoursesByZipCode(@Param("zipcode")String zipcodeDeparture,@Param("zipcode") String zipcodeArrival, @Param("date") LocalDateTime dateMin);
 
     /**
      * Renvoie les Courses n'ayant pas été delete et ayant lieu après la date et l'heure actuelle
@@ -60,14 +60,16 @@ public interface CourseRepository extends JpaRepository<CourseEntity, Integer> {
      * @param entity
      * @return List<CourseEntity>
      */
-    List<CourseEntity> findAllByUserEntity(UserEntity entity);
+    List<CourseEntity> findAllByUserEntityAndDeletedAtNullAndDateAfter(UserEntity entity, LocalDateTime dateMin);
 
     /**
-     * Récupère les courses crée par un User et les pagines
+     * Récupère les courses créées par un User et les pagines
      * @param entity
      * @param pageable
      * @return Page<CourseEntity>
      */
-    Page<CourseEntity> findAllByUserEntity(UserEntity entity, Pageable pageable);
+    Page<CourseEntity> findAllByUserEntityAndDeletedAtNullAndDateAfter(UserEntity entity, Pageable pageable, LocalDateTime dateMin);
+
+    Page<CourseEntity> findAllByDeletedAtNullAndDateAfter(Pageable pageable, LocalDateTime dateMin);
 
 }

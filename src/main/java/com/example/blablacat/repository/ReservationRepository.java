@@ -1,5 +1,6 @@
 package com.example.blablacat.repository;
 
+import com.example.blablacat.entity.CourseEntity;
 import com.example.blablacat.entity.ReservationEntity;
 import com.example.blablacat.entity.UserEntity;
 import org.springframework.data.domain.Page;
@@ -28,5 +29,7 @@ public interface ReservationRepository extends JpaRepository<ReservationEntity, 
      * @return
      */
     Page<ReservationEntity> findAllByUserEntity(UserEntity entity, Pageable pageable);
+
+    List<ReservationEntity> findAllByCourseEntity(CourseEntity entity);
 
 }
