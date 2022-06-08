@@ -1,9 +1,7 @@
 package com.example.blablacat.services;
 
 import com.example.blablacat.dto.CourseDto;
-import com.example.blablacat.dto.ReservationDto;
 import com.example.blablacat.entity.CourseEntity;
-import com.example.blablacat.entity.ReservationEntity;
 import com.example.blablacat.entity.UserEntity;
 import com.example.blablacat.repository.CourseRepository;
 import com.example.blablacat.repository.UserRepository;

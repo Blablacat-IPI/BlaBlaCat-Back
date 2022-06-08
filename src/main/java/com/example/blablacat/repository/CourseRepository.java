@@ -1,7 +1,6 @@
 package com.example.blablacat.repository;
 
 import com.example.blablacat.entity.CourseEntity;
-import com.example.blablacat.entity.ReservationEntity;
 import com.example.blablacat.entity.UserEntity;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -17,15 +16,27 @@ import java.util.List;
 public interface CourseRepository extends JpaRepository<CourseEntity, Integer> {
 
     /**
-     * Renvoie les Courses ayant une certaines ville en point de départ ou arrivée
+     * Renvoie les courses dont les noms de ville correspondent au filtre city voulu
      * @param cityDeparture
      * @param cityArrival
      * @return List<CourseEntity>
      */
     List<CourseEntity> findByCityDepartureLikeOrCityArrivalLike(@Param("city") String cityDeparture, @Param("city") String cityArrival);
 
+    /**
+     * Renvoie les courses dont les noms d'adresse' correspondent au filtre street voulu
+     * @param streetDeparture
+     * @param streetArrival
+     * @return List<CourseEntity>
+     */
     List<CourseEntity> findByStreetDepartureLikeOrStreetArrivalLike(@Param("street")String streetDeparture,@Param("street") String streetArrival);
 
+    /**
+     * Renvoie les courses dont le code postal correspond au filtre zipcode voulu
+     * @param zipcodeDeparture
+     * @param zipcodeArrival
+     * @return List<CourseEntity>
+     */
     @Query(value = "select * from Courses where departure_zip_code like ?% or arrival_zip_code like ?%", nativeQuery = true)
     List<CourseEntity> getAllCoursesByZipCode(@Param("zipcode")String zipcodeDeparture,@Param("zipcode") String zipcodeArrival);
 
