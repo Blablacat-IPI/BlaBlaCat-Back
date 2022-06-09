@@ -22,10 +22,10 @@ public class UserController {
     @GetMapping("getById")
     public UserDto getById(@RequestParam Integer id){return service.getById(id);}
 
+
     @PostMapping("updateUser")
     public void updateUser(@RequestBody UserDto dto){
         if(service.checkExistById(dto.getId())){
-            System.out.println("Dans le user controller");
             service.updateUser(dto);
         }
     }
