@@ -11,7 +11,7 @@ public interface IAuthentificationService{
      * @param password
      * @return boolean
      */
-    Boolean login(String email, String password);
+    Integer login(String email, String password);
 
     /**
      * Convertie les données username id et role en dto

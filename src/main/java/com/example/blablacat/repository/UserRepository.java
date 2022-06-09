@@ -37,6 +37,8 @@ public interface UserRepository extends JpaRepository<UserEntity, Integer> {
 
     boolean existsByEmailAndPassword(String email, String password);
 
+    boolean existsByEmailAndPasswordAndValidateAdminNotNull(String email, String password);
+
     UserEntity getByEmail(String email);
 
 
