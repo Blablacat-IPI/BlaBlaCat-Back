@@ -201,7 +201,13 @@ public class CourseService implements ICourseService {
     @Override
     public Integer numberPageMaxOfCourses() {
         List<CourseEntity> list = courseRepository.findAllByDeletedAtNullAndDateAfter(LocalDateTime.now());
-        return list.size() / 12 ;
+
+        if(list.size()%12 == 0){
+            return list.size() / 12;
+        } else {
+            return (list.size() / 12)+1;
+        }
+
     }
 
     @Override
