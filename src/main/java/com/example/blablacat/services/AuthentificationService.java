@@ -17,8 +17,17 @@ public class AuthentificationService implements IAuthentificationService {
 
 
     @Override
-    public Boolean login(String email, String password) {
-        return userRepository.existsByEmailAndPassword(email, password);
+    public Integer login(String email, String password) {
+        if(userRepository.existsByEmailAndPassword(email, password)){
+            if(userRepository.existsByEmailAndPasswordAndValidateAdminNotNull(email, password)){
+                return 1; //all ok
+            } else {
+                return 2; //not validate by admin
+            }
+        } else {
+            return 0; //mauvais id
+        }
+
     }
 
     @Override

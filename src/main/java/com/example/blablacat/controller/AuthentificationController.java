@@ -17,19 +17,15 @@ public class AuthentificationController {
 
 
     @GetMapping("Login")
-    public ResponseEntity<Boolean> login(@RequestParam String email, @RequestParam String password) {
+    public ResponseEntity<Integer> login(@RequestParam String email, @RequestParam String password) {
 
         if (email.length() < 1 || password.length() < 1) {
             return new ResponseEntity("Un des champs est vide", HttpStatus.BAD_REQUEST);
         }
 
         try {
-            Boolean response = service.login(email, password);
-            if (response) {
-                return new ResponseEntity(response, HttpStatus.OK);
-            } else {
-                return new ResponseEntity("Identifiant incorrect", HttpStatus.NOT_FOUND);
-            }
+            Integer response = service.login(email, password);
+            return new ResponseEntity(response, HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
