@@ -30,6 +30,18 @@ public class UserController {
         }
     }
 
+    @GetMapping("email/{driverUsername}")
+    public ResponseEntity<String> getDriverEmail(@PathVariable String driverUsername){
+        System.out.println("dans controller");
+        try {
+            String reponse = this.service.getUserEmailByUsername(driverUsername);
+            return new ResponseEntity(reponse, HttpStatus.OK);
+        } catch (Exception e ){
+            return new ResponseEntity(e.getMessage(), HttpStatus.BAD_REQUEST);
+        }
+
+    }
+
     @GetMapping("usernameCheckVacant")
     public Boolean checkUsernameVacant(@RequestParam String username){
         if(service.checkUsernameUsed(username)){

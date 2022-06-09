@@ -41,6 +41,8 @@ public interface UserRepository extends JpaRepository<UserEntity, Integer> {
 
     UserEntity getByEmail(String email);
 
+    UserEntity getUserEntityByUsername(String username);
+
 
 
 }

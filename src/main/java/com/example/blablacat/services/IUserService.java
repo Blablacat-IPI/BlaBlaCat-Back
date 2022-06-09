@@ -134,4 +134,5 @@ public interface IUserService {
     List<UserDto> getAllUsersValidateByPages(Integer page, Integer size);
 
 
+    String getUserEmailByUsername(String driverUsername);
 }
