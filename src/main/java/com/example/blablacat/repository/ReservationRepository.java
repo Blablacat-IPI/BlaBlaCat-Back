@@ -9,6 +9,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -20,7 +21,7 @@ public interface ReservationRepository extends JpaRepository<ReservationEntity, 
      * @param entity
      * @return list
      */
-    List<ReservationEntity> findAllByUserEntity(UserEntity entity);
+    List<ReservationEntity> findAllByUserEntityAndDeletedAtNullAndCourseEntity_DateAfter(UserEntity entity, LocalDateTime dateMin);
 
     /**
      * Permet la pagination des courses réservé par un user
@@ -28,8 +29,21 @@ public interface ReservationRepository extends JpaRepository<ReservationEntity, 
      * @param pageable
      * @return
      */
-    Page<ReservationEntity> findAllByUserEntity(UserEntity entity, Pageable pageable);
+    Page<ReservationEntity> findAllByUserEntityAndDeletedAtNullAndCourseEntity_DateAfter(UserEntity entity, Pageable pageable, LocalDateTime dateMin);
 
+    /**
+     * Récupère toutes les réservations d'un trajet
+     * @param entity CourseEntity du trajet concerné
+     * @return list<ReservationEntity>
+     */
     List<ReservationEntity> findAllByCourseEntity(CourseEntity entity);
+
+    /**
+     * Récupère une réservation à partir d'un trajet et d'un l'user
+     * @param courseEntity Trajet concerné
+     * @param userEntity User ayant réservé
+     * @return ReservationEntity
+     */
+    ReservationEntity findByCourseEntityAndUserEntity(CourseEntity courseEntity, UserEntity userEntity);
 
 }

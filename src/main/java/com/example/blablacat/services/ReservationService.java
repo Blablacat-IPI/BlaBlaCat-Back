@@ -70,8 +70,7 @@ public class ReservationService implements IReservationService {
 
     @Override
     public Integer numberPageMaxReservationByUser(Integer userId) {
-        //ist<ReservationEntity> list = reservationRepository.findAll();
-        List<ReservationEntity> list = reservationRepository.findAllByUserEntity(userRepository.findById(userId).get());
+        List<ReservationEntity> list = reservationRepository.findAllByUserEntityAndDeletedAtNullAndCourseEntity_DateAfter(userRepository.findById(userId).get(), LocalDateTime.now());
         return list.size() / 5 ;
     }
 
@@ -79,9 +78,8 @@ public class ReservationService implements IReservationService {
     @Override
     public List<ReservationDto> getAllReservationsByUserPage(Integer page, Integer size, Integer userId) {
 
-        //List<ReservationEntity> list = reservationRepository.findAll(PageRequest.of(page, size)).getContent();
         UserEntity user = userRepository.findById(userId).get();
-        List<ReservationEntity> list = reservationRepository.findAllByUserEntity(user, PageRequest.of(page, size)).getContent();
+        List<ReservationEntity> list = reservationRepository.findAllByUserEntityAndDeletedAtNullAndCourseEntity_DateAfter(user, PageRequest.of(page, size), LocalDateTime.now()).getContent();
 
         List<ReservationDto> listFinal = new ArrayList<>();
 
@@ -94,5 +92,18 @@ public class ReservationService implements IReservationService {
     @Override
     public Boolean exists(Integer id) {
         return reservationRepository.existsById(id);
+    }
+
+    @Override
+    public void deleteReservation(Integer courseId, Integer userId) {
+
+        CourseEntity courseEntity = this.courseRepository.findById(courseId).get();
+        UserEntity userEntity = this.userRepository.findById(userId).get();
+        ReservationEntity resEntity = this.reservationRepository.findByCourseEntityAndUserEntity(courseEntity, userEntity);
+
+        resEntity.setDeletedAt(LocalDateTime.now());
+        this.reservationRepository.saveAndFlush(resEntity);
+
+        System.out.println("Id de la réservation supprimée = " + resEntity.getId());
     }
 }

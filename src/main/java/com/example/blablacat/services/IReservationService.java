@@ -56,4 +56,6 @@ public interface IReservationService {
      * @return true ou false
      */
     Boolean exists(Integer id);
+
+    void deleteReservation(Integer courseId, Integer userId);
 }

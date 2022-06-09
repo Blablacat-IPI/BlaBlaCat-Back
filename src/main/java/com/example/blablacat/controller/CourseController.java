@@ -70,13 +70,7 @@ public class CourseController {
 
     @DeleteMapping("deleteCourse/{courseId}")
     public void deleteCourses(@PathVariable("courseId") Integer courseId){
-        System.out.println("dans controller");
-//        try {
-            this.courseService.deleteCourse(courseId);
-//            return new ResponseEntity<>("Trajet supprimé", HttpStatus.OK);
-//        } catch (Exception e){
-//            return new ResponseEntity<>("Le trajet n'a pas pu être supprimé", HttpStatus.BAD_REQUEST);
-//        }
+        this.courseService.deleteCourse(courseId);
     }
 
     @GetMapping("pageMaxMyCourses")

@@ -186,15 +186,13 @@ public class CourseService implements ICourseService {
 
         //déplacer dans reservationService ?
         List<ReservationEntity> listReservations = this.reservationRepository.findAllByCourseEntity(courseEntity);
-        System.out.println("taille liste " + listReservations.size());
+
         for (ReservationEntity resEntity: listReservations){
             resEntity.setDeletedAt(LocalDateTime.now());
         }
 
         if(listReservations.size() > 0)
             this.reservationRepository.saveAllAndFlush(listReservations);
-
-        System.out.print("avant soft delete course");
 
         courseEntity.setDeletedAt(LocalDateTime.now());
         this.courseRepository.saveAndFlush(courseEntity);
