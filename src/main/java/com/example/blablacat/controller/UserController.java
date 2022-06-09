@@ -25,16 +25,13 @@ public class UserController {
     @PostMapping("updateUser")
     public void updateUser(@RequestBody UserDto dto){
         if(service.checkExistById(dto.getId())){
-            System.out.println("Dans le user controller");
             service.updateUser(dto);
         }
     }
 
     @GetMapping("usernameCheckVacant")
     public Boolean checkUsernameVacant(@RequestParam String username){
-
         if(service.checkUsernameUsed(username)){
-            //Username déjà utilisé
             return false;
         } else {
             return true;
@@ -45,7 +42,6 @@ public class UserController {
     public Boolean checkCompanyIdVacant(@RequestParam String companyId){
 
         if(service.checkCompanyIdUsed(companyId)){
-            //companyId déjà utilisé
             return false;
         } else {
             return true;
@@ -54,9 +50,7 @@ public class UserController {
 
     @GetMapping("emailCheckVacant")
     public Boolean checkEmailVacant(@RequestParam String email){
-
         if(service.checkEmailUsed(email)){
-            //Email déjà utilisé
             return false;
         } else {
             return true;
