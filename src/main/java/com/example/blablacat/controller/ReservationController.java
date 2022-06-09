@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@CrossOrigin(origins="https://blablacat.vercel.app")
+@CrossOrigin(origins="https://front-v2-seven.vercel.app/")
 @RestController
 @RequestMapping("Reservation")
 public class ReservationController {
