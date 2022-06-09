@@ -180,4 +180,10 @@ public class UserService implements IUserService {
         return listFinal;
     }
 
+    @Override
+    public String getUserEmailByUsername(String driverUsername) {
+        UserEntity entity = this.userRepository.getUserEntityByUsername(driverUsername);
+        return entity.getEmail();
+    }
+
 }
