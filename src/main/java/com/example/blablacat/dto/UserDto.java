@@ -2,6 +2,7 @@ package com.example.blablacat.dto;
 
 public class UserDto {
 
+    private Integer id;
     private String lastName;
     private String firstName;
     private String username;
@@ -9,6 +10,13 @@ public class UserDto {
     private String email;
     private String password;
 
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
     public String getLastName() {
         return lastName;
     }

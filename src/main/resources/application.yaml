@@ -1,0 +1,11 @@
+spring:
+  datasource:
+    url: "jdbc:sqlserver://poe-ipi-cap.database.windows.net;database=Blablacat"
+    username: "admin-loick"
+    password: "jLrFw439@"
+    driver-class-name: com.microsoft.sqlserver.jdbc.SQLServerDriver
+  jpa:
+    properties:
+      hibernate:
+        format_sql: true
+    show-sql: true

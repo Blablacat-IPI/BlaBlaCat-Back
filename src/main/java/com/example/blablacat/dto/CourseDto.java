@@ -1,23 +1,56 @@
 package com.example.blablacat.dto;
 
+import com.example.blablacat.entity.UserEntity;
+
 import java.time.LocalDateTime;
 
 public class CourseDto {
-
-    private Integer idDriver;
+    private Integer id;
+    private String driverUsername;
     private LocalDateTime date;
+
     private String cityDeparture;
+    private Integer departureZipCode;
     private String streetDeparture;
+
     private String cityArrival;
+    private Integer arrivalZipCode;
     private String streetArrival;
+
     private Integer numberPlace;
 
-    public Integer getIdDriver() {
-        return idDriver;
+
+
+    public String getDriverUsername() {
+        return driverUsername;
     }
 
-    public void setIdDriver(Integer idDriver) {
-        this.idDriver = idDriver;
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public void setDriverUsername(String driverUsername) {
+        this.driverUsername = driverUsername;
+    }
+
+    public Integer getDepartureZipCode() {
+        return departureZipCode;
+    }
+
+    public void setDepartureZipCode(Integer departureZipCode) {
+        this.departureZipCode = departureZipCode;
+    }
+
+    public Integer getArrivalZipCode() {
+        return arrivalZipCode;
+    }
+
+    public void setArrivalZipCode(Integer arrivalZipCode) {
+        this.arrivalZipCode = arrivalZipCode;
     }
 
     public LocalDateTime getDate() {

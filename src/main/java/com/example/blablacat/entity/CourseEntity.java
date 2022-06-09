@@ -5,17 +5,19 @@ import org.springframework.data.annotation.LastModifiedDate;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
-@Table(name = "Course")
+@Table(name = "Courses")
 public class CourseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Integer id;
 
-    @Column(name = "id_driver")
-    private Integer idDriver;
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "id_driver", referencedColumnName = "id")
+    private UserEntity userEntity;
 
     @Column(name = "date")
     private LocalDateTime date;
@@ -23,11 +25,17 @@ public class CourseEntity {
     @Column(name = "city_departure")
     private String cityDeparture;
 
+    @Column(name= "departure_zip_code")
+    private Integer departureZipCode;
+
     @Column(name = "street_departure")
     private String streetDeparture;
 
     @Column(name = "city_arrival")
     private String cityArrival;
+
+    @Column(name= "arrival_zip_code")
+    private Integer arrivalZipCode;
 
     @Column(name = "street_arrival")
     private String streetArrival;
@@ -46,20 +54,36 @@ public class CourseEntity {
     @Column(name = "deleted_at")
     private LocalDateTime deletedAt;
 
+    public UserEntity getUserEntity() {
+        return userEntity;
+    }
+
+    public void setUserEntity(UserEntity userEntity) {
+        this.userEntity = userEntity;
+    }
+
+    public Integer getDepartureZipCode() {
+        return departureZipCode;
+    }
+
+    public void setDepartureZipCode(Integer departureZipCode) {
+        this.departureZipCode = departureZipCode;
+    }
+
+    public Integer getArrivalZipCode() {
+        return arrivalZipCode;
+    }
+
+    public void setArrivalZipCode(Integer arrivalZipCode) {
+        this.arrivalZipCode = arrivalZipCode;
+    }
+
     public Integer getId() {
         return id;
     }
 
     public void setId(Integer id) {
         this.id = id;
-    }
-
-    public Integer getIdDriver() {
-        return idDriver;
-    }
-
-    public void setIdDriver(Integer idDriver) {
-        this.idDriver = idDriver;
     }
 
     public LocalDateTime getDate() {

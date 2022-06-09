@@ -1,11 +1,13 @@
 package com.example.blablacat.entity;
 
 import javax.persistence.*;
+
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
 @Table(name = "Users")
@@ -48,6 +50,33 @@ public class UserEntity {
 
     @Column(name = "deleted_at")
     private LocalDateTime deletedAt;
+
+    @Column(name = "role")
+    private String role;
+
+    @OneToMany
+    @JoinColumn(name="user_id", referencedColumnName = "id")
+    private List<ReservationEntity> userHasCourseEntityList;
+
+    @OneToMany
+    @JoinColumn(name="id_driver", referencedColumnName = "id")
+    private List<CourseEntity> courseEntityList;
+
+    public List<ReservationEntity> getUserHasCourseEntityList() {
+        return userHasCourseEntityList;
+    }
+
+    public void setUserHasCourseEntityList(List<ReservationEntity> userHasCourseEntityList) {
+        this.userHasCourseEntityList = userHasCourseEntityList;
+    }
+
+    public List<CourseEntity> getCourseEntityList() {
+        return courseEntityList;
+    }
+
+    public void setCourseEntityList(List<CourseEntity> courseEntityList) {
+        this.courseEntityList = courseEntityList;
+    }
 
     public Integer getId() {
         return id;
@@ -135,5 +164,13 @@ public class UserEntity {
 
     public void setDeletedAt(LocalDateTime deletedAt) {
         this.deletedAt = deletedAt;
+    }
+
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
     }
 }
