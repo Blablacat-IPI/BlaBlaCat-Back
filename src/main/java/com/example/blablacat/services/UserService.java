@@ -42,7 +42,7 @@ public class UserService implements IUserService {
 
     @Override
     public boolean checkUsernameUsed(String username) {
-
+        System.out.println("Dans service, exist : " + userRepository.existsByUsername(username));
         return userRepository.existsByUsername(username);
     }
 
