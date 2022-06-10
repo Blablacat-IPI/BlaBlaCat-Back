@@ -8,7 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@CrossOrigin(origins = "https://blablacat.vercel.app/")
+@CrossOrigin(origins = "https://blablacat.vercel.app")
 @RequestMapping("Auth")
 public class AuthentificationController {
 
